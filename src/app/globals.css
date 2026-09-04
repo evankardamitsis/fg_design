@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f1ee;
+  --foreground: #1c1b1b;
+
+  /* Movement timing. Real camera moves accelerate slowly and settle slowly;
+     these curves are used everywhere so the whole site shares one sense of weight. */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-cinematic-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-drift: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@theme inline {
+  --color-cream: #f4f1ee;
+  --color-ink: #1c1b1b;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: "Boska", ui-serif, Georgia, serif;
+  --font-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
