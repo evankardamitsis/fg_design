@@ -25,3 +25,15 @@ body {
   color: var(--foreground);
 }
 
+/* Failsafe for scroll-revealed content.
+   Motion components inline their hidden state into the SSR HTML, so without JS
+   that content would never become visible. `!important` is required here
+   specifically because it has to beat those inline styles. The .js class is set
+   before first paint, so this never causes a flash. */
+html:not(.js) [data-reveal] {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+

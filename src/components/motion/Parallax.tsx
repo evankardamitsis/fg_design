@@ -1,18 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "framer-motion";
 import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /**
- * Image that drifts slower than the page as it passes through the viewport, and
- * is revealed behind a clip-path wipe. The image is over-sized by the travel
- * distance so the frame never shows an empty edge.
+ * Full-bleed image that drifts slower than the page as it crosses the viewport.
+ * The image is over-scanned by the travel distance so the frame never exposes an
+ * empty edge at either end of the scrub.
  */
 export function ParallaxImage({
   src,
@@ -30,47 +29,46 @@ export function ParallaxImage({
   strength?: number;
   priority?: boolean;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
+  const root = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
 
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [`-${strength}%`, `${strength}%`]
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        inner.current,
+        { yPercent: -strength },
+        {
+          yPercent: strength,
+          ease: "none",
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    },
+    { scope: root, dependencies: [strength] }
   );
 
   return (
-    <div ref={ref} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        style={reduced ? undefined : { y }}
-        className="absolute inset-0 will-change-transform"
-        // Over-scan so the parallax travel never exposes the frame edge.
-        initial={false}
+    <div ref={root} className={`relative overflow-hidden ${className}`}>
+      <div
+        ref={inner}
+        className="absolute will-change-transform"
+        style={{ top: `-${strength}%`, bottom: `-${strength}%`, left: 0, right: 0 }}
       >
-        <div
-          className="absolute"
-          style={{
-            top: `-${strength}%`,
-            bottom: `-${strength}%`,
-            left: 0,
-            right: 0,
-          }}
-        >
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            sizes={sizes}
-            quality={90}
-            priority={priority}
-            className="object-cover"
-          />
-        </div>
-      </motion.div>
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          quality={90}
+          priority={priority}
+          className="object-cover"
+        />
+      </div>
     </div>
   );
 }

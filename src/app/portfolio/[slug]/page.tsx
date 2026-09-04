@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
-import { Reveal } from "@/components/motion/Reveal";
+import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 import { HeroHeadingSimple } from "@/components/HeroHeadingSimple";
 import { projects, getProject } from "@/lib/projects";
 
@@ -102,9 +102,9 @@ export default async function ProjectPage({
       <section className="bg-ink/[0.03] py-16 md:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-16 px-6 md:px-10">
           {project.exterior ? (
-            <Reveal className="relative aspect-[16/9] w-full overflow-hidden">
+            <RevealMedia className="relative aspect-[16/9] w-full overflow-hidden">
               <Image src={project.exterior.src} alt={project.exterior.alt} fill sizes="100vw" className="object-cover" />
-            </Reveal>
+            </RevealMedia>
           ) : null}
           {project.gallery.map((image, i) => (
             <Reveal

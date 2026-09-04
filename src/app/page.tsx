@@ -7,7 +7,7 @@ import { HeroHeading } from "@/components/HeroHeading";
 import { ProjectTile } from "@/components/ProjectTile";
 import { Reveal, StaggerReveal } from "@/components/motion/Reveal";
 import { StaggerCard } from "@/components/motion/StaggerCard";
-import { TextReveal } from "@/components/motion/MaskReveal";
+import { TextReveal } from "@/components/motion/TextReveal";
 import { ParallaxImage } from "@/components/motion/Parallax";
 import { Counter } from "@/components/motion/Counter";
 import { projects } from "@/lib/projects";

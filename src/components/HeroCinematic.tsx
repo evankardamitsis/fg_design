@@ -1,22 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /**
  * Layered cinematic hero.
  *
- * Depth comes from three planes moving at different rates as you scroll:
- *   background (slow) -> scrim -> content (fastest).
+ * The background sits at its natural object-cover framing and does not scale —
+ * any zoom here compounds with object-cover's crop and reads as "zoomed in".
+ * Depth instead comes from the content plane and scrim moving against a still
+ * frame as the section leaves.
  *
- * Motion is scroll-driven only. Pointer-driven tilt was removed deliberately:
- * it makes the frame move under a still cursor, which reads as unsteady rather
- * than composed.
- *
- * The push-in is a GPU transform rather than a baked video — ffmpeg's zoompan
- * crops on integer pixels, which judders on slow moves, and re-encoding a zoomed
- * crop softens the image.
+ * Scroll-linked work is GSAP rather than framer's useScroll so it shares a
+ * ticker with Lenis; two independent scroll systems resolve against positions a
+ * frame apart, which shows up as jitter.
  */
 export function HeroCinematic({
   src,
@@ -27,24 +29,35 @@ export function HeroCinematic({
   alt: string;
   children?: React.ReactNode;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
+  const root = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
+  useGSAP(
+    () => {
+      const scrollTrigger = {
+        trigger: root.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      };
 
-  // The background does not scale or translate at all: it sits at its natural
-  // object-cover framing, matching the Figma composition exactly. Any zoom here
-  // compounds with object-cover's crop and reads as "zoomed in".
-  // Depth comes from the content plane and scrim moving against a still frame.
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "55%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
-  const scrim = useTransform(scrollYProgress, [0, 1], [0.55, 0.85]);
+      gsap.to("[data-hero-content]", {
+        yPercent: 55,
+        opacity: 0,
+        ease: "none",
+        scrollTrigger,
+      });
+
+      gsap.to("[data-hero-scrim]", {
+        opacity: 0.85,
+        ease: "none",
+        scrollTrigger,
+      });
+    },
+    { scope: root }
+  );
 
   return (
-    <div ref={ref} className="absolute inset-0 overflow-hidden">
+    <div ref={root} className="absolute inset-0 overflow-hidden">
       {/* Background plane — static, natural framing */}
       <div className="absolute inset-0">
         <Image
@@ -58,25 +71,18 @@ export function HeroCinematic({
         />
       </div>
 
-      {/* NOTE: a defocused duplicate of the photo was trialled here as a foreground
-          depth plane. Even masked and blurred it hazes the whole frame and costs
-          contrast, so it was removed. Genuine foreground/background separation
-          needs a real cut-out (alpha-matted) asset, not a masked copy. */}
-
-      {/* Scrim, deepening as the section leaves */}
-      <motion.div
-        style={{ opacity: scrim }}
-        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/15 via-45% to-transparent"
+      <div
+        data-hero-scrim
+        className="absolute inset-0 bg-gradient-to-t from-ink via-ink/15 via-45% to-transparent opacity-55"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-ink/45 via-transparent via-45% to-transparent" />
 
-      {/* Content plane */}
-      <motion.div
-        style={reduced ? undefined : { y: contentY, opacity: contentOpacity }}
+      <div
+        data-hero-content
         className="absolute inset-0 z-10 flex flex-col justify-end"
       >
         {children}
-      </motion.div>
+      </div>
     </div>
   );
 }

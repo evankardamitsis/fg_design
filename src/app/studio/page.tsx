@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
-import { Reveal } from "@/components/motion/Reveal";
+import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
   title: "Studio | FG Design Partners",
@@ -27,7 +27,7 @@ export default function StudioPage() {
         </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-          <Reveal className="relative aspect-[4/5] overflow-hidden">
+          <RevealMedia className="relative aspect-[4/5] overflow-hidden">
             <Image
               src="/images/projects/chelsea-house/04-drawing-room.jpg"
               alt="A refined drawing room at Chelsea House"
@@ -35,7 +35,7 @@ export default function StudioPage() {
               sizes="(min-width: 768px) 50vw, 100vw"
               className="object-cover"
             />
-          </Reveal>
+          </RevealMedia>
           <Reveal delay={0.15} className="flex flex-col justify-center gap-6">
             <p className="text-base leading-relaxed text-ink/75 md:text-lg">
               FG Design was founded in 2016 by Fardad Ghodoussi, following a

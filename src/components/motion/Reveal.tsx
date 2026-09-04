@@ -1,69 +1,120 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-const easing = [0.16, 1, 0.3, 1] as const;
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-  y = 28,
-  once = true,
-}: {
+/** Expo-out. Leaves quickly, settles slowly — how real camera moves behave. */
+export const EASE = "power3.out";
+/** Symmetrical, for wipes where both ends should feel unhurried. */
+export const EASE_IN_OUT = "power2.inOut";
+
+/** Where a reveal fires: when the element's top reaches 85% down the viewport. */
+const START = "top 85%";
+
+type Common = {
   children: React.ReactNode;
   className?: string;
   delay?: number;
-  y?: number;
-  once?: boolean;
-}) {
+};
+
+/**
+ * Content reveal — a short rise out of a slight defocus.
+ *
+ * ScrollTrigger resolves against scroll offsets rather than IntersectionObserver,
+ * so this fires correctly even for elements clipped by an `overflow-hidden`
+ * ancestor. That was the flaw in the previous implementation: an observer on a
+ * translated element inside a clipping box reports zero visible area and can
+ * never satisfy a visibility threshold, so titles never appeared.
+ */
+export function Reveal({ children, className, delay = 0, y = 14 }: Common & { y?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.from(ref.current, {
+        opacity: 0,
+        y,
+        filter: "blur(6px)",
+        duration: 0.95,
+        delay,
+        ease: EASE,
+        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      });
+    },
+    { scope: ref }
+  );
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-10% 0px -10% 0px" }}
-      transition={{ duration: 0.9, delay, ease: easing }}
-      className={className}
-    >
+    <div ref={ref} data-reveal className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
-export const staggerContainer: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.09, delayChildren: 0.1 },
-  },
-};
+/**
+ * Media reveal — a clip wipe with the frame settling out of a slight over-scale.
+ * No blur: blurring a large photograph mid-scroll is expensive, and the wipe
+ * already carries the motion.
+ */
+export function RevealMedia({ children, className, delay = 0 }: Common) {
+  const ref = useRef<HTMLDivElement>(null);
 
-export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.9, ease: easing },
-  },
-};
+  useGSAP(
+    () => {
+      gsap.from(ref.current, {
+        clipPath: "inset(14% 0% 0% 0%)",
+        opacity: 0,
+        duration: 1.25,
+        delay,
+        ease: EASE_IN_OUT,
+        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      });
+    },
+    { scope: ref }
+  );
 
+  return (
+    <div ref={ref} data-reveal className={className}>
+      {children}
+    </div>
+  );
+}
+
+/**
+ * Staggered group. Children opt in with `data-stagger`, so the group can hold
+ * arbitrary markup and only the intended items animate.
+ */
 export function StaggerReveal({
   children,
   className,
-  once = true,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  once?: boolean;
-}) {
+  stagger = 0.08,
+}: Common & { stagger?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const items = gsap.utils.toArray<HTMLElement>("[data-stagger]", ref.current);
+      if (!items.length) return;
+      gsap.from(items, {
+        opacity: 0,
+        y: 14,
+        filter: "blur(6px)",
+        duration: 0.95,
+        ease: EASE,
+        stagger,
+        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      });
+    },
+    { scope: ref }
+  );
+
   return (
-    <motion.div
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once, margin: "-10% 0px -10% 0px" }}
-      variants={staggerContainer}
-      className={className}
-    >
+    <div ref={ref} className={className}>
       {children}
-    </motion.div>
+    </div>
   );
 }
