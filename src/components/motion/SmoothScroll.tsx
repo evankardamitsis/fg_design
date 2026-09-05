@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,8 +19,13 @@ gsap.registerPlugin(ScrollTrigger);
  * ScrollTrigger to update on each Lenis frame keeps them on the same tick.
  */
 export function SmoothScroll() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const isProjectDetail = pathname.startsWith("/portfolio/");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion || isProjectDetail) {
       ScrollTrigger.refresh();
       return;
     }
@@ -46,7 +52,7 @@ export function SmoothScroll() {
       lenis.destroy();
       window.removeEventListener("load", refresh);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

@@ -2,14 +2,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
-import { Eyebrow } from "@/components/Eyebrow";
-import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 import { HeroHeadingSimple } from "@/components/HeroHeadingSimple";
-import { projects, getProject } from "@/lib/projects";
+import { Nav } from "@/components/Nav";
+import { ProjectSections } from "@/components/projects/ProjectSections";
+import { Reveal, RevealMedia } from "@/components/motion/Reveal";
+import { getProjectBySlug, getProjects } from "@/lib/project-content";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return projects.map((project) => ({ slug: project.slug }));
 }
 
@@ -19,8 +20,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProjectBySlug(slug);
+
   if (!project) return {};
+
   return {
     title: `${project.title} | FG Design Partners`,
     description: project.brief.paragraphs[0],
@@ -33,113 +36,98 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const [project, projects] = await Promise.all([
+    getProjectBySlug(slug),
+    getProjects(),
+  ]);
+
   if (!project) notFound();
 
-  const currentIndex = projects.findIndex((p) => p.slug === slug);
+  const currentIndex = projects.findIndex((item) => item.slug === slug);
   const next = projects[(currentIndex + 1) % projects.length];
 
   return (
     <>
-      <div className="relative flex h-[70vh] min-h-[480px] flex-col justify-end overflow-hidden">
+      <div className="relative flex min-h-[560px] h-[86dvh] flex-col justify-end overflow-hidden bg-ink">
         <Image
-          src={project.cover.src}
-          alt={project.cover.alt}
+          src={project.hero.src}
+          alt={project.hero.alt}
           fill
           priority
+          quality={95}
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/82 via-ink/12 to-ink/18" />
         <Nav variant="overlay" />
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-14 md:px-10">
-          <HeroHeadingSimple index={project.index} title={project.title} location={project.location} postcode={project.postcode} />
+        <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-12 md:px-10 md:pb-16 lg:px-14">
+          <HeroHeadingSimple
+            index={project.index}
+            title={project.title}
+            location={project.location}
+            postcode={project.postcode}
+          />
         </div>
       </div>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-24">
-        <Reveal>
-          <div className="grid grid-cols-1 gap-x-16 gap-y-10 border-b border-ink/10 pb-16 text-sm md:grid-cols-4">
-            <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-ink/50">Location</span>
-              <p className="mt-2">{project.location}, {project.postcode}</p>
-            </div>
-            <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-ink/50">Timeline</span>
-              <p className="mt-2">{project.timeline}</p>
-            </div>
-            <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-ink/50">Scope</span>
-              <p className="mt-2">{project.scope}</p>
-            </div>
+      <section className="px-5 py-10 md:px-10 md:py-12 lg:px-14">
+        <Reveal className="mx-auto grid max-w-[1440px] gap-7 border-b border-ink/12 pb-10 text-sm sm:grid-cols-3 md:gap-10 md:pb-12">
+          <div>
+            <p className="text-ink/46">Location</p>
+            <p className="mt-2 text-ink/78">
+              {project.location}, {project.postcode}
+            </p>
+          </div>
+          <div>
+            <p className="text-ink/46">Timeline</p>
+            <p className="mt-2 text-ink/78">{project.timeline}</p>
+          </div>
+          <div>
+            <p className="text-ink/46">Residence</p>
+            <p className="mt-2 text-ink/78">{project.scope}</p>
           </div>
         </Reveal>
-
-        <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-20">
-          <Reveal>
-            <Eyebrow>{project.brief.eyebrow}</Eyebrow>
-            <h2 className="mt-8 text-3xl leading-tight md:text-5xl">{project.brief.heading}</h2>
-            {project.brief.paragraphs.map((paragraph) => (
-              <p key={paragraph} className="mt-6 text-base leading-relaxed text-ink/75 md:text-lg">
-                {paragraph}
-              </p>
-            ))}
-          </Reveal>
-          <Reveal delay={0.15}>
-            <span className="text-xs uppercase tracking-[0.2em] text-ink/50">Scope of Works</span>
-            <ul className="mt-6 space-y-4">
-              {project.scopeOfWorks.map((item) => (
-                <li key={item} className="flex gap-4 border-b border-ink/10 pb-4 text-sm md:text-base">
-                  <span className="font-display italic text-ink/40">&mdash;</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
       </section>
 
-      <section className="bg-ink/[0.03] py-16 md:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col gap-16 px-6 md:px-10">
-          {project.exterior ? (
-            <RevealMedia className="relative aspect-[16/9] w-full overflow-hidden">
-              <Image src={project.exterior.src} alt={project.exterior.alt} fill sizes="100vw" className="object-cover" />
-            </RevealMedia>
-          ) : null}
-          {project.gallery.map((image, i) => (
-            <Reveal
-              key={image.src}
-              className={`grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-16 ${
-                i % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
-              }`}
-            >
-              <div className="relative aspect-[4/3] w-full overflow-hidden">
-                <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
-              </div>
-              <div>
-                <span className="text-xs uppercase tracking-[0.2em] text-ink/50">
-                  {project.postcode} &middot; 0{i + 1}
-                </span>
-                <h3 className="mt-3 text-2xl md:text-3xl">{image.room}</h3>
-                {image.caption ? (
-                  <p className="mt-4 max-w-md text-sm leading-relaxed text-ink/70 md:text-base">
-                    {image.caption}
-                  </p>
-                ) : null}
-              </div>
+      <main>
+        <ProjectSections sections={project.sections} />
+
+        <section className="bg-ink px-5 pb-24 pt-32 text-cream md:px-10 md:pb-36 md:pt-44 lg:px-14">
+          <div className="mx-auto max-w-[1440px] border-t border-cream/16 pt-10">
+            <Reveal>
+              <p className="text-sm text-cream/48">Continue to the next residence</p>
             </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <Reveal className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-6 py-20 md:flex-row md:items-center md:justify-between md:px-10">
-        <div>
-          <span className="text-xs uppercase tracking-[0.2em] text-ink/50">Next Project</span>
-          <Link href={`/portfolio/${next.slug}`} className="mt-2 block text-3xl hover:opacity-70 md:text-5xl">
-            {next.title} &rarr;
-          </Link>
-        </div>
-      </Reveal>
+            <div className="mt-8 grid items-end gap-10 md:grid-cols-12">
+              <Reveal className="md:col-span-7">
+                <Link
+                  href={`/portfolio/${next.slug}`}
+                  className="group inline-flex items-end gap-5 font-display text-4xl leading-none tracking-[-0.035em] transition-opacity hover:opacity-70 md:text-6xl lg:text-7xl"
+                >
+                  {next.title}
+                  <span
+                    aria-hidden
+                    className="mb-1 inline-block font-sans text-2xl transition-transform duration-300 group-hover:translate-x-1 md:mb-2"
+                  >
+                    →
+                  </span>
+                </Link>
+                <p className="mt-4 text-sm text-cream/48">
+                  {next.location}, {next.postcode}
+                </p>
+              </Reveal>
+              <RevealMedia className="relative aspect-[3/2] overflow-hidden md:col-span-4 md:col-start-9">
+                <Image
+                  src={next.hero.src}
+                  alt={next.hero.alt}
+                  fill
+                  sizes="(min-width: 768px) 34vw, 100vw"
+                  className="object-cover transition-transform duration-700 hover:scale-[1.025]"
+                />
+              </RevealMedia>
+            </div>
+          </div>
+        </section>
+      </main>
 
       <Footer />
     </>

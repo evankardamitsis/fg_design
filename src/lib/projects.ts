@@ -18,6 +18,7 @@ export type Project = {
   };
   scopeOfWorks: string[];
   cover: ProjectImage;
+  hero: ProjectImage;
   exterior?: ProjectImage;
   gallery: (ProjectImage & { room: string; caption?: string })[];
 };
@@ -28,7 +29,7 @@ export const projects: Project[] = [
     title: "Chelsea House",
     location: "Chelsea Park Gardens",
     postcode: "SW3",
-    timeline: "July 2021 — March 2022",
+    timeline: "July 2021 - March 2022",
     scope: "Four-storey townhouse",
     index: "01",
     brief: {
@@ -48,10 +49,12 @@ export const projects: Project[] = [
       "Landscaping for seamless access to the garden",
       "Full interior design & specification",
     ],
-    cover: { src: "/images/projects/chelsea-house/01-dining.jpg", alt: "Dining room with travertine table at Chelsea House" },
+    cover: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
+    hero: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
     exterior: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
     gallery: [
       { src: "/images/projects/chelsea-house/01-dining.jpg", room: "Dining Room", caption: "A travertine table and sculptural seating set against a wall-hung artwork and bespoke, recessed storage.", alt: "Chelsea House dining room" },
+      { src: "/images/projects/chelsea-house/06-living-room.jpg", room: "Living Room", caption: "Custom shelving with carefully proportioned niches frames a sculptural stone fireplace, grounded by layered, tactile textures and the interplay of natural light.", alt: "Chelsea House living room with custom shelving and a stone fireplace" },
       { src: "/images/projects/chelsea-house/02-kitchen-dining.jpg", room: "Kitchen & Dining", alt: "Chelsea House kitchen and dining hallway" },
       { src: "/images/projects/chelsea-house/03-bedroom.jpg", room: "Principal Bedroom", alt: "Chelsea House principal bedroom" },
       { src: "/images/projects/chelsea-house/04-drawing-room.jpg", room: "Drawing Room", caption: "A textured, sculptural sofa and a bespoke glass-topped table compose a refined setting for artful living, against curated works and layered finishes.", alt: "Chelsea House drawing room" },
@@ -63,7 +66,7 @@ export const projects: Project[] = [
     title: "Kensington Palace",
     location: "Palace Green",
     postcode: "W8",
-    timeline: "September 2021 — January 2023",
+    timeline: "September 2021 - January 2023",
     scope: "Lateral apartment",
     index: "02",
     brief: {
@@ -83,11 +86,16 @@ export const projects: Project[] = [
       "Premium finishes throughout",
     ],
     cover: { src: "/images/projects/kensington-palace/01-kitchen.jpg", alt: "Kitchen with Moroccan mosaic at Kensington Palace apartment" },
+    hero: { src: "/images/projects/kensington-palace/01-kitchen.jpg", alt: "Kitchen with Moroccan mosaic at Kensington Palace apartment" },
     gallery: [
       { src: "/images/projects/kensington-palace/01-kitchen.jpg", room: "Kitchen", caption: "Sculptural cabinetry and a Moroccan mosaic backsplash, framed by Gaggenau appliances and integrated lighting.", alt: "Kensington Palace kitchen" },
       { src: "/images/projects/kensington-palace/02-wardrobe.jpg", room: "Wardrobe", caption: "Bespoke cabinetry with refined hardware pairs classic with contemporary.", alt: "Kensington Palace wardrobe" },
       { src: "/images/projects/kensington-palace/03-dressing.jpg", room: "Master Dressing", alt: "Kensington Palace master dressing room" },
+      { src: "/images/projects/kensington-palace/05-entrance-hall.jpg", room: "Entrance Hall", caption: "Gracefully arched doorways and intricately carved cornices meet a herringbone floor, balancing symmetry with a contemporary sensibility.", alt: "Kensington Palace entrance hall with arched doorways and herringbone flooring" },
       { src: "/images/projects/kensington-palace/04-bathroom.jpg", room: "Master Bathroom", caption: "Intricate tiling, an arched recess, and a custom water feature form a serene, spa-like retreat.", alt: "Kensington Palace master bathroom" },
+      { src: "/images/projects/kensington-palace/06-detail-one.jpg", room: "Details", alt: "Concealed integrated systems at Kensington Palace" },
+      { src: "/images/projects/kensington-palace/07-detail-two.jpg", room: "Details", alt: "Wall-mounted home controls at Kensington Palace" },
+      { src: "/images/projects/kensington-palace/08-detail-three.jpg", room: "Details", alt: "Refined wall controls at Kensington Palace" },
     ],
   },
   {
@@ -95,7 +103,7 @@ export const projects: Project[] = [
     title: "Wycombe Square",
     location: "Kensington & Notting Hill",
     postcode: "W8",
-    timeline: "June 2019 — March 2020",
+    timeline: "June 2019 - March 2020",
     scope: "Five-storey townhouse",
     index: "03",
     brief: {
@@ -103,7 +111,7 @@ export const projects: Project[] = [
       heading: "Understated luxury, a private square.",
       paragraphs: [
         "A full refurbishment of a five-storey townhouse with a private indoor swimming pool, in the heart of Kensington and Notting Hill.",
-        "The approach: an understated take on luxury — upgrading key finishes and services while preserving the home's elegant character.",
+        "The approach is an understated take on luxury, upgrading key finishes and services while preserving the home's elegant character.",
       ],
     },
     scopeOfWorks: [
@@ -115,12 +123,13 @@ export const projects: Project[] = [
       "Restoration of original finishes",
     ],
     // 01-pool.jpg is only 600x338 in the source deck — too low-res for a cover.
-    cover: { src: "/images/projects/wycombe-square/02-dressing.jpg", alt: "Panelled dressing room at Wycombe Square" },
+    cover: { src: "/images/projects/wycombe-square/exterior.jpg", alt: "Exterior of Wycombe Square, W8" },
+    hero: { src: "/images/projects/wycombe-square/exterior.jpg", alt: "Exterior of Wycombe Square, W8" },
     exterior: { src: "/images/projects/wycombe-square/exterior.jpg", alt: "Exterior of Wycombe Square, W8" },
     gallery: [
-      { src: "/images/projects/wycombe-square/01-pool.jpg", room: "Indoor Pool", caption: "A mosaic-lined pool and natural stone surrounds beneath a glazed wall and soft ambient light — a space made for stillness.", alt: "Wycombe Square indoor pool" },
+      { src: "/images/projects/wycombe-square/01-pool.jpg", room: "Indoor Pool", caption: "A mosaic-lined pool and natural stone surrounds sit beneath a glazed wall and soft ambient light, creating a space made for stillness.", alt: "Wycombe Square indoor pool" },
       { src: "/images/projects/wycombe-square/02-dressing.jpg", room: "Panelled Dressing", alt: "Wycombe Square panelled dressing room" },
-      { src: "/images/projects/wycombe-square/03-entrance-hall.jpg", room: "Entrance Hall", caption: "A composed introduction to the home — bespoke, elegant, and effortlessly practical.", alt: "Wycombe Square entrance hall" },
+      { src: "/images/projects/wycombe-square/03-entrance-hall.jpg", room: "Entrance Hall", caption: "A composed introduction to the home that is bespoke, elegant and effortlessly practical.", alt: "Wycombe Square entrance hall" },
     ],
   },
   {
@@ -128,7 +137,7 @@ export const projects: Project[] = [
     title: "Notting Hill House",
     location: "Hereford Road",
     postcode: "W2",
-    timeline: "September 2023 — December 2024",
+    timeline: "September 2023 - December 2024",
     scope: "Five-storey townhouse",
     index: "04",
     brief: {
@@ -149,10 +158,15 @@ export const projects: Project[] = [
       "Full bespoke joinery package",
     ],
     // 01-boot-room.jpg is only 767x1024 in the source deck — too low-res for a cover.
-    cover: { src: "/images/projects/notting-hill-house/02-garden-room.jpg", alt: "Garden room at Notting Hill House" },
+    cover: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill House, W2" },
+    hero: { src: "/images/projects/notting-hill-house/02-garden-room.jpg", alt: "Garden room at Notting Hill House" },
     exterior: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill House, W2" },
     gallery: [
-      { src: "/images/projects/notting-hill-house/01-boot-room.jpg", room: "Boot Room", caption: "Elegant detailing meets a playful run of colourful hooks against a warm, textured wall — refined architecture and personality, side by side.", alt: "Notting Hill House boot room" },
+      { src: "/images/projects/notting-hill-house/03-kitchen.jpg", room: "Kitchen", caption: "Soft matte cabinetry and a compact island are warmed by oak shelving, brass accents and ambient recessed light.", alt: "Notting Hill House kitchen with a compact island and oak shelving" },
+      { src: "/images/projects/notting-hill-house/01-boot-room.jpg", room: "Boot Room", caption: "Elegant detailing meets a playful run of colourful hooks against a warm, textured wall, placing refined architecture and personality side by side.", alt: "Notting Hill House boot room" },
+      { src: "/images/projects/notting-hill-house/04-kids-bathroom.jpg", room: "Kids Bathroom", alt: "Notting Hill House children's bathroom with colourful patterned tiles" },
+      { src: "/images/projects/notting-hill-house/05-stair-hall.jpg", room: "Stair Hall", caption: "Dark timber treads and minimalist black balusters sit beneath classical ceiling cornices, where a fanlight draws daylight into the hall.", alt: "Notting Hill House stair hall with dark timber treads and black balusters" },
+      { src: "/images/projects/notting-hill-house/06-dressing-room.jpg", room: "Dressing Room", alt: "Notting Hill House dressing room with fitted cabinetry" },
       { src: "/images/projects/notting-hill-house/02-garden-room.jpg", room: "Garden Room", alt: "Notting Hill House garden room" },
     ],
   },
@@ -161,7 +175,7 @@ export const projects: Project[] = [
     title: "Gloucester Walk",
     location: "Kensington",
     postcode: "W2",
-    timeline: "December 2024 — February 2026",
+    timeline: "December 2024 - February 2026",
     scope: "Five-storey residence",
     index: "05",
     brief: {
@@ -181,13 +195,14 @@ export const projects: Project[] = [
       "Full bespoke joinery package",
       "Complete new flooring throughout",
     ],
-    cover: { src: "/images/projects/gloucester-walk/02-shower-room.jpg", alt: "Book-matched marble shower room at Gloucester Walk" },
+    cover: { src: "/images/projects/gloucester-walk/exterior.jpg", alt: "Exterior of Gloucester Walk, W2" },
+    hero: { src: "/images/projects/gloucester-walk/01-living-room.jpg", alt: "Living room with timber joinery and a curved bay window at Gloucester Walk" },
     exterior: { src: "/images/projects/gloucester-walk/exterior.jpg", alt: "Exterior of Gloucester Walk, W2" },
     gallery: [
       { src: "/images/projects/gloucester-walk/01-living-room.jpg", room: "Living Room", caption: "Timber joinery, stone, and soft textiles compose around a streamlined fireplace and a curved bay window.", alt: "Gloucester Walk living room" },
       { src: "/images/projects/gloucester-walk/02-shower-room.jpg", room: "Shower Room", caption: "Dramatic book-matched marble forms a striking focal point, set off by frameless glazing and matte-black fixtures.", alt: "Gloucester Walk shower room" },
-      { src: "/images/projects/gloucester-walk/03-dressing.jpg", room: "Dressing Room", alt: "Gloucester Walk dressing room" },
-      { src: "/images/projects/gloucester-walk/04-reading-nook.jpg", room: "Reading Nook", caption: "Soft upholstery, muted tones, and concealed storage form a thoughtfully crafted corner within the room — practical and quietly elegant.", alt: "Gloucester Walk reading nook" },
+      { src: "/images/projects/gloucester-walk/03-dressing.jpg", room: "Bathroom", alt: "Gloucester Walk bathroom with pale stone and bespoke fittings" },
+      { src: "/images/projects/gloucester-walk/04-reading-nook.jpg", room: "Reading Nook", caption: "Soft upholstery, muted tones and concealed storage form a thoughtfully crafted corner that is practical and quietly elegant.", alt: "Gloucester Walk reading nook" },
       { src: "/images/projects/gloucester-walk/05-kitchen.jpg", room: "Kitchen", alt: "Gloucester Walk kitchen" },
       { src: "/images/projects/gloucester-walk/06-bedroom.jpg", room: "Master Bedroom", alt: "Gloucester Walk master bedroom" },
     ],

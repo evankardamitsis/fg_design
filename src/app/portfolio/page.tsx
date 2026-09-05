@@ -5,15 +5,17 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/motion/Reveal";
-import { projects } from "@/lib/projects";
+import { getProjects } from "@/lib/project-content";
 
 export const metadata: Metadata = {
   title: "Portfolio | FG Design Partners",
   description:
-    "Five London residences, 2019—2026 — Chelsea House, Kensington Palace, Wycombe Square, Notting Hill House, and Gloucester Walk.",
+    "Five London residences, 2019 to 2026: Chelsea House, Kensington Palace, Wycombe Square, Notting Hill House, and Gloucester Walk.",
 };
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const projects = await getProjects();
+
   return (
     <>
       <Nav variant="solid" />
@@ -27,7 +29,7 @@ export default function PortfolioPage() {
             Five residences.
           </h1>
           <p className="mt-4 font-display italic text-xl text-ink/70">
-            2019 — 2026, London SW3 &middot; W8 &middot; W2
+            2019 to 2026, London SW3, W8 and W2
           </p>
         </Reveal>
       </section>

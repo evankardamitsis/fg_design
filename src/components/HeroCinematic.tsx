@@ -11,10 +11,10 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 /**
  * Layered cinematic hero.
  *
- * The background sits at its natural object-cover framing and does not scale —
- * any zoom here compounds with object-cover's crop and reads as "zoomed in".
- * Depth instead comes from the content plane and scrim moving against a still
- * frame as the section leaves.
+ * The background keeps its natural object-cover framing on larger screens. On
+ * mobile it receives a very small, damped scale as the hero leaves the viewport.
+ * Numeric scrub interpolation prevents the transform from following touch-scroll
+ * deltas frame for frame, which can otherwise feel like the page is jumping.
  *
  * Scroll-linked work is GSAP rather than framer's useScroll so it shares a
  * ticker with Lenis; two independent scroll systems resolve against positions a
@@ -50,6 +50,12 @@ export function HeroCinematic({
   useGSAP(
     () => {
       const media = gsap.matchMedia();
+      const createScrollTrigger = (scrub = 0.75) => ({
+        trigger: root.current,
+        start: "top top",
+        end: "bottom top",
+        scrub,
+      });
 
       media.add("(prefers-reduced-motion: no-preference)", () => {
         gsap.fromTo(
@@ -58,24 +64,31 @@ export function HeroCinematic({
           { opacity: 1, duration: 1.35, ease: "power2.out" }
         );
 
-        const scrollTrigger = {
-          trigger: root.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        };
-
         gsap.to("[data-hero-content]", {
           yPercent: 45,
           opacity: 0,
+          force3D: true,
           ease: "none",
-          scrollTrigger,
+          scrollTrigger: createScrollTrigger(),
         });
 
         gsap.to("[data-hero-scrim]", {
           opacity: 0.8,
           ease: "none",
-          scrollTrigger,
+          scrollTrigger: createScrollTrigger(),
+        });
+      });
+
+      media.add("(max-width: 767px) and (prefers-reduced-motion: no-preference)", () => {
+        gsap.to(mediaLayer.current, {
+          scale: 1.045,
+          transformOrigin: "center center",
+          force3D: true,
+          ease: "none",
+          scrollTrigger: {
+            ...createScrollTrigger(1),
+            invalidateOnRefresh: true,
+          },
         });
       });
 
@@ -86,7 +99,7 @@ export function HeroCinematic({
 
   return (
     <div ref={root} className="absolute inset-0 overflow-hidden">
-      <div ref={mediaLayer} className="absolute inset-0">
+      <div ref={mediaLayer} className="absolute inset-0 will-change-transform">
         {videoSrc ? (
           <video
             ref={video}

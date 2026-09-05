@@ -62,7 +62,7 @@ export default async function Home() {
             delay={0.04}
             className="mt-7 max-w-5xl font-display text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl lg:text-7xl"
           >
-            Design, build and completion under one roof.
+            One studio. One standard throughout.
           </TextReveal>
           <Reveal delay={0.12} className="mt-8 max-w-2xl">
             <p className="text-base leading-relaxed text-ink/68 md:text-lg">
