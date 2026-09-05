@@ -22,7 +22,7 @@ export function Button({ href, children, variant = "solid", className = "" }: Bu
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold tracking-tight transition-colors duration-300 ease-out ${variants[variant]} ${className}`}
+      className={`inline-flex min-h-12 items-center justify-center whitespace-nowrap px-6 py-3.5 text-base font-semibold tracking-tight transition-colors duration-200 ease-out active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-current motion-reduce:transition-none ${variants[variant]} ${className}`}
     >
       {children}
     </Link>

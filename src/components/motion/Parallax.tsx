@@ -34,20 +34,26 @@ export function ParallaxImage({
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        inner.current,
-        { yPercent: -strength },
-        {
-          yPercent: strength,
-          ease: "none",
-          scrollTrigger: {
-            trigger: root.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        }
-      );
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          inner.current,
+          { yPercent: -strength },
+          {
+            yPercent: strength,
+            ease: "none",
+            scrollTrigger: {
+              trigger: root.current,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      });
+
+      return () => media.revert();
     },
     { scope: root, dependencies: [strength] }
   );

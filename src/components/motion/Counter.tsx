@@ -1,44 +1,54 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(0);
-  const started = useRef(false);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+  useGSAP(
+    () => {
+      const element = ref.current;
+      if (!element) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          const duration = 1400;
-          const start = performance.now();
-          const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+      const media = gsap.matchMedia();
 
-          function tick(now: number) {
-            const progress = Math.min((now - start) / duration, 1);
-            setDisplay(Math.round(easeOutQuart(progress) * value));
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
+      media.add("(prefers-reduced-motion: reduce)", () => {
+        element.textContent = `${value}${suffix}`;
+      });
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value]);
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        ScrollTrigger.create({
+          trigger: element,
+          start: "top 88%",
+          once: true,
+          onEnter: () => {
+            const counter = { current: 0 };
 
-  return (
-    <span ref={ref}>
-      {display}
-      {suffix}
-    </span>
+            gsap.to(counter, {
+              current: value,
+              duration: 1.3,
+              ease: "power3.out",
+              snap: { current: 1 },
+              onStart: () => {
+                element.textContent = `0${suffix}`;
+              },
+              onUpdate: () => {
+                element.textContent = `${Math.round(counter.current)}${suffix}`;
+              },
+            });
+          },
+        });
+      });
+
+      return () => media.revert();
+    },
+    { scope: ref, dependencies: [suffix, value] }
   );
+
+  return <span ref={ref} aria-label={`${value}${suffix}`}>{value}{suffix}</span>;
 }

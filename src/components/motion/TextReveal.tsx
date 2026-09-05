@@ -42,26 +42,32 @@ export function TextReveal({
       const el = ref.current;
       if (!el) return;
 
-      const split = SplitText.create(el, {
-        type: "lines",
-        mask: "lines", // each line gets its own clipping box
-        linesClass: "reveal-line",
-        autoSplit: true,
-        onSplit(self) {
-          return gsap.from(self.lines, {
-            yPercent: 108,
-            duration: 1.15,
-            delay,
-            ease: EASE,
-            stagger: 0.1,
-            ...(animateOnMount
-              ? {}
-              : { scrollTrigger: { trigger: el, start: "top 85%", once: true } }),
-          });
-        },
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const split = SplitText.create(el, {
+          type: "lines",
+          mask: "lines",
+          linesClass: "reveal-line",
+          autoSplit: true,
+          onSplit(self) {
+            return gsap.from(self.lines, {
+              yPercent: 108,
+              duration: 1.05,
+              delay,
+              ease: EASE,
+              stagger: 0.08,
+              ...(animateOnMount
+                ? {}
+                : { scrollTrigger: { trigger: el, start: "top 85%", once: true } }),
+            });
+          },
+        });
+
+        return () => split.revert();
       });
 
-      return () => split.revert();
+      return () => media.revert();
     },
     { scope: ref, dependencies: [animateOnMount, delay] }
   );

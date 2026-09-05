@@ -37,3 +37,6 @@ html:not(.js) [data-reveal] {
   clip-path: none !important;
 }
 
+html:not(.js) [data-page-veil] {
+  display: none;
+}

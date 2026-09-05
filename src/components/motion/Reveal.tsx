@@ -35,17 +35,22 @@ export function Reveal({ children, className, delay = 0, y = 14 }: Common & { y?
 
   useGSAP(
     () => {
-      gsap.from(ref.current, {
-        opacity: 0,
-        y,
-        filter: "blur(6px)",
-        duration: 0.95,
-        delay,
-        ease: EASE,
-        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(ref.current, {
+          opacity: 0,
+          y,
+          duration: 0.85,
+          delay,
+          ease: EASE,
+          scrollTrigger: { trigger: ref.current, start: START, once: true },
+        });
       });
+
+      return () => media.revert();
     },
-    { scope: ref }
+    { scope: ref, dependencies: [delay, y] }
   );
 
   return (
@@ -65,16 +70,22 @@ export function RevealMedia({ children, className, delay = 0 }: Common) {
 
   useGSAP(
     () => {
-      gsap.from(ref.current, {
-        clipPath: "inset(14% 0% 0% 0%)",
-        opacity: 0,
-        duration: 1.25,
-        delay,
-        ease: EASE_IN_OUT,
-        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.from(ref.current, {
+          clipPath: "inset(14% 0% 0% 0%)",
+          opacity: 0,
+          duration: 1.15,
+          delay,
+          ease: EASE_IN_OUT,
+          scrollTrigger: { trigger: ref.current, start: START, once: true },
+        });
       });
+
+      return () => media.revert();
     },
-    { scope: ref }
+    { scope: ref, dependencies: [delay] }
   );
 
   return (
@@ -97,19 +108,25 @@ export function StaggerReveal({
 
   useGSAP(
     () => {
-      const items = gsap.utils.toArray<HTMLElement>("[data-stagger]", ref.current);
-      if (!items.length) return;
-      gsap.from(items, {
-        opacity: 0,
-        y: 14,
-        filter: "blur(6px)",
-        duration: 0.95,
-        ease: EASE,
-        stagger,
-        scrollTrigger: { trigger: ref.current, start: START, once: true },
+      const media = gsap.matchMedia();
+
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        const items = gsap.utils.toArray<HTMLElement>("[data-stagger]", ref.current);
+        if (!items.length) return;
+
+        gsap.from(items, {
+          opacity: 0,
+          y: 16,
+          duration: 0.85,
+          ease: EASE,
+          stagger,
+          scrollTrigger: { trigger: ref.current, start: START, once: true },
+        });
       });
+
+      return () => media.revert();
     },
-    { scope: ref }
+    { scope: ref, dependencies: [stagger] }
   );
 
   return (

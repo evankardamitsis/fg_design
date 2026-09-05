@@ -19,6 +19,11 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export function SmoothScroll() {
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      ScrollTrigger.refresh();
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t: number) => 1 - Math.pow(1 - t, 4),

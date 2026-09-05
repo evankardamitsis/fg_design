@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -23,52 +23,94 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 export function HeroCinematic({
   src,
   alt,
+  videoSrc,
   children,
 }: {
   src: string;
   alt: string;
+  /** Optional motion plate. The still is used as its poster, so first paint is
+   *  identical either way and the video simply takes over once buffered. */
+  videoSrc?: string;
   children?: React.ReactNode;
 }) {
   const root = useRef<HTMLDivElement>(null);
+  const mediaLayer = useRef<HTMLDivElement>(null);
+  const video = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    // Setting muted via the DOM property rather than the JSX attribute: React
+    // does not always reflect `muted` in time for the browser's autoplay check,
+    // which silently blocks playback and leaves the poster frozen on screen.
+    el.muted = true;
+    el.play().catch(() => {});
+  }, []);
 
   useGSAP(
     () => {
-      const scrollTrigger = {
-        trigger: root.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      };
+      const media = gsap.matchMedia();
 
-      gsap.to("[data-hero-content]", {
-        yPercent: 55,
-        opacity: 0,
-        ease: "none",
-        scrollTrigger,
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.fromTo(
+          mediaLayer.current,
+          { opacity: 0.72 },
+          { opacity: 1, duration: 1.35, ease: "power2.out" }
+        );
+
+        const scrollTrigger = {
+          trigger: root.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+        };
+
+        gsap.to("[data-hero-content]", {
+          yPercent: 45,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger,
+        });
+
+        gsap.to("[data-hero-scrim]", {
+          opacity: 0.8,
+          ease: "none",
+          scrollTrigger,
+        });
       });
 
-      gsap.to("[data-hero-scrim]", {
-        opacity: 0.85,
-        ease: "none",
-        scrollTrigger,
-      });
+      return () => media.revert();
     },
     { scope: root }
   );
 
   return (
     <div ref={root} className="absolute inset-0 overflow-hidden">
-      {/* Background plane — static, natural framing */}
-      <div className="absolute inset-0">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority
-          quality={95}
-          sizes="100vw"
-          className="object-cover object-center"
-        />
+      <div ref={mediaLayer} className="absolute inset-0">
+        {videoSrc ? (
+          <video
+            ref={video}
+            className="h-full w-full object-cover object-center"
+            poster={src}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
+        ) : (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            priority
+            quality={100}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        )}
       </div>
 
       <div
