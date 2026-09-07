@@ -9,7 +9,7 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
         <Reveal className="border-b border-cream/10">
           <div className="mx-auto flex max-w-7xl flex-col items-start gap-8 px-6 py-20 md:flex-row md:items-center md:justify-between md:px-10 md:py-28">
             <h2 className="max-w-xl text-3xl leading-tight md:text-5xl">
-              Ready to talk through a project?
+              Ready to talk through a <span className="font-display italic">project?</span>
             </h2>
             <Button href="/contact" variant="frosted" className="shrink-0">
               Start a project.

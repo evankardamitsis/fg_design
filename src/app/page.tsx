@@ -60,9 +60,9 @@ export default async function Home() {
           <TextReveal
             as="h2"
             delay={0.04}
-            className="mt-7 max-w-5xl font-display text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl lg:text-7xl"
+            className="mt-7 max-w-5xl text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl lg:text-7xl"
           >
-            One studio. One standard throughout.
+            One studio. <span className="font-display italic tracking-[-0.02em]">One standard throughout.</span>
           </TextReveal>
           <Reveal delay={0.12} className="mt-8 max-w-2xl">
             <p className="text-base leading-relaxed text-ink/68 md:text-lg">
@@ -101,9 +101,9 @@ export default async function Home() {
             <TextReveal
               as="h2"
               delay={0.04}
-              className="mt-7 max-w-3xl font-display text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl"
+              className="mt-7 max-w-3xl text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl"
             >
-              A concise view of the portfolio.
+              A concise view of the <span className="font-display italic tracking-[-0.02em]">portfolio.</span>
             </TextReveal>
             <div className="mt-12 md:mt-16">
               <EditorialProjectGallery projects={featuredProjects} tone="dark" />
@@ -129,9 +129,9 @@ export default async function Home() {
         <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-36 lg:px-14">
           <TextReveal
             as="h2"
-            className="max-w-4xl font-display text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl"
+            className="max-w-4xl text-4xl leading-[1.05] tracking-[-0.035em] md:text-6xl"
           >
-            Experience made personal.
+            Experience made <span className="font-display italic tracking-[-0.02em]">personal.</span>
           </TextReveal>
           <Reveal delay={0.08} className="mt-8 max-w-2xl">
             <p className="text-base leading-relaxed text-ink/68 md:text-lg">

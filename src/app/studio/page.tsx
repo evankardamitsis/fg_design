@@ -50,9 +50,9 @@ export default function StudioPage() {
               as="h1"
               animateOnMount
               delay={0.08}
-              className="mt-7 max-w-[11ch] font-display text-[clamp(3rem,6vw,6rem)] leading-[0.98] tracking-[-0.045em]"
+              className="mt-7 max-w-[12ch] text-[clamp(3rem,6vw,6rem)] leading-[0.98] tracking-[-0.045em]"
             >
-              An in-house studio, one standard of quality
+              An in-house studio, <span className="font-display italic tracking-[-0.025em]">one standard of quality</span>
             </TextReveal>
             <Reveal delay={0.12} className="mt-8 max-w-lg">
               <p className="text-base leading-relaxed text-ink/68 md:text-lg">
@@ -79,9 +79,9 @@ export default function StudioPage() {
             <div className="md:col-span-7 lg:col-span-6">
               <TextReveal
                 as="h2"
-                className="max-w-[10ch] font-display text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
+                className="max-w-[12ch] text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
               >
-                Experience before the studio
+                Experience before the <span className="font-display italic tracking-[-0.02em]">studio</span>
               </TextReveal>
               <Reveal delay={0.08} className="mt-8 max-w-xl space-y-6">
                 <p className="text-base leading-relaxed text-ink/68 md:text-lg">
@@ -129,9 +129,9 @@ export default function StudioPage() {
           <div className="mx-auto max-w-[1440px]">
             <TextReveal
               as="h2"
-              className="max-w-4xl font-display text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl lg:text-7xl"
+              className="max-w-4xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl lg:text-7xl"
             >
-              Every decision stays connected
+              Every decision stays <span className="font-display italic tracking-[-0.02em]">connected</span>
             </TextReveal>
             <Reveal delay={0.08} className="mt-8 max-w-2xl">
               <p className="text-base leading-relaxed text-cream/68 md:text-lg">
@@ -168,9 +168,9 @@ export default function StudioPage() {
         <section className="mx-auto max-w-[1440px] px-5 py-24 md:px-10 md:py-36 lg:px-14">
           <TextReveal
             as="h2"
-            className="max-w-4xl font-display text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
+            className="max-w-4xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
           >
-            From lateral apartments to five-storey homes
+            From lateral apartments to <span className="font-display italic tracking-[-0.02em]">five-storey homes</span>
           </TextReveal>
           <Reveal delay={0.08} className="mt-8 max-w-2xl">
             <p className="text-base leading-relaxed text-ink/68 md:text-lg">

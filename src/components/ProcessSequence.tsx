@@ -85,9 +85,9 @@ export function ProcessSequence({ steps }: { steps: ProcessStep[] }) {
       <div className="overflow-hidden">
         <h2
           data-process-title
-          className="font-display text-4xl leading-[1.02] tracking-[-0.04em] md:whitespace-nowrap md:text-[clamp(3.25rem,5.5vw,5.75rem)]"
+          className="text-4xl leading-[1.02] tracking-[-0.04em] md:whitespace-nowrap md:text-[clamp(3.25rem,5.5vw,5.75rem)]"
         >
-          One point of responsibility.
+          One point of <span className="font-display italic tracking-[-0.02em]">responsibility.</span>
         </h2>
       </div>
       <p className="mt-7 max-w-xl text-base leading-relaxed text-ink/68 md:text-lg">

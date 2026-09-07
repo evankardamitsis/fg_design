@@ -20,13 +20,13 @@ export default async function PortfolioPage() {
     <>
       <Nav variant="solid" />
 
-      <section className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+      <section className="mx-auto max-w-[1440px] px-5 py-20 md:px-10 md:py-28 lg:px-14">
         <Reveal>
           <Eyebrow>Selected Works.</Eyebrow>
         </Reveal>
         <Reveal delay={0.1}>
-          <h1 className="mt-8 max-w-3xl text-4xl leading-tight md:text-6xl">
-            Five residences.
+          <h1 className="mt-8 max-w-3xl text-4xl leading-tight tracking-[-0.035em] md:text-6xl">
+            Five <span className="font-display italic tracking-[-0.02em]">residences.</span>
           </h1>
           <p className="mt-4 font-display italic text-xl text-ink/70">
             2019 to 2026, London SW3, W8 and W2
@@ -35,21 +35,21 @@ export default async function PortfolioPage() {
       </section>
 
       <section className="pb-24 md:pb-32">
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="mx-auto max-w-[1440px] px-5 md:px-10 lg:px-14">
           <div className="divide-y divide-ink/10 border-t border-ink/10">
             {projects.map((project) => (
               <Reveal key={project.slug} y={20}>
                 <Link
                   href={`/portfolio/${project.slug}`}
-                  className="group grid grid-cols-1 items-center gap-6 py-8 md:grid-cols-[auto_1fr_auto_auto] md:gap-10 md:py-10"
+                  className="group grid grid-cols-1 items-center gap-6 py-8 md:grid-cols-[2rem_18rem_1fr_auto] md:gap-8 md:py-10 lg:grid-cols-[2rem_22rem_1fr_auto] lg:gap-10 xl:grid-cols-[2rem_24rem_1fr_auto]"
                 >
                   <span className="font-display italic text-lg text-ink/50">{project.index}</span>
-                  <div className="relative aspect-[16/10] w-full overflow-hidden md:aspect-[4/3] md:w-56">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden md:aspect-[3/2]">
                     <Image
                       src={project.cover.src}
                       alt={project.cover.alt}
                       fill
-                      sizes="(min-width: 768px) 224px, 100vw"
+                      sizes="(min-width: 1280px) 384px, (min-width: 1024px) 352px, (min-width: 768px) 288px, 100vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
