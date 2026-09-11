@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
+import { PortfolioCategoryNav } from "@/components/PortfolioCategoryNav";
 import { Reveal } from "@/components/motion/Reveal";
 import { getProjects } from "@/lib/project-content";
 
@@ -31,6 +32,9 @@ export default async function PortfolioPage() {
           <p className="mt-4 font-display italic text-xl text-ink/70">
             2019 to 2026, London SW3, W8 and W2
           </p>
+        </Reveal>
+        <Reveal delay={0.16}>
+          <PortfolioCategoryNav active="residential" />
         </Reveal>
       </section>
 

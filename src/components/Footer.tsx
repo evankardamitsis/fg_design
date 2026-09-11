@@ -31,7 +31,10 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
             <span className="text-xs uppercase tracking-[0.2em] text-cream/50">Studio</span>
             <ul className="mt-4 space-y-2 text-sm">
               <li><Link href="/studio" className="hover:opacity-70">About</Link></li>
-              <li><Link href="/portfolio" className="hover:opacity-70">Portfolio</Link></li>
+              <li><Link href="/portfolio" className="hover:opacity-70">Residential</Link></li>
+              <li><Link href="/portfolio/commercial" className="hover:opacity-70">Commercial</Link></li>
+              <li><Link href="/construction" className="hover:opacity-70">Construction</Link></li>
+              <li><Link href="/design" className="hover:opacity-70">Design</Link></li>
             </ul>
           </div>
           <div>
