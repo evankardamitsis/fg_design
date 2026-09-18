@@ -68,11 +68,11 @@ export default async function ConstructionPage() {
               <div className="md:col-span-7">
                 <Eyebrow>On site</Eyebrow>
                 <h2 className="mt-7 text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl">
-                  The work behind <span className="font-display italic">the finish.</span>
+                  Everything the finish <span className="font-display italic">rests on.</span>
                 </h2>
               </div>
               <p className="max-w-xl text-base leading-relaxed text-ink/62 md:col-span-4 md:col-start-9 md:text-lg">
-                Structural steel, new floor structures, services and propping, delivered by the same team that designed the rooms above them.
+                Steel, new floor structures, services and temporary works. None of it is visible once a room is complete, and all of it decides whether the room lasts.
               </p>
             </Reveal>
 
