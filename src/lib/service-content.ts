@@ -37,6 +37,38 @@ export const constructionPageContent = {
     "Stone, tiling & specialist finishes",
     "Quality control & handover",
   ],
+  site: [
+    {
+      src: "/images/construction/site/steel-beam.jpg",
+      alt: "New steel beam installed above a period staircase during a structural opening",
+      label: "Structural steel",
+    },
+    {
+      src: "/images/construction/site/structural-opening.jpg",
+      alt: "Exposed timber joists and temporary propping in a stripped-back period room",
+      label: "Strip-out & propping",
+    },
+    {
+      src: "/images/construction/site/steel-frame.jpg",
+      alt: "Steel frame forming a double-height opening across two floors",
+      label: "Double-height opening",
+    },
+    {
+      src: "/images/construction/site/floor-structure.jpg",
+      alt: "New timber floor structure and steelwork looking out to a rear extension",
+      label: "New floor structure",
+    },
+    {
+      src: "/images/construction/site/building-services.jpg",
+      alt: "Ventilation ductwork installed at ceiling level in a basement corridor",
+      label: "Building services",
+    },
+    {
+      src: "/images/construction/site/concrete-pour.jpg",
+      alt: "Ready-mix concrete delivery on a London street",
+      label: "Concrete delivery",
+    },
+  ] satisfies ServicePageImage[],
 };
 
 export const designPageContent = {
@@ -44,6 +76,18 @@ export const designPageContent = {
   title: "Spaces conceived with purpose.",
   intro:
     "FG Design develops the spatial plan, interior architecture and material language together, giving each project a clear identity before it moves into construction.",
+  visualisations: [
+    {
+      src: "/images/commercial/newcastle-united/cgi-aerial.jpg",
+      alt: "Aerial CGI of the Newcastle United Training Centre",
+      label: "Newcastle United Training Centre",
+    },
+    {
+      src: "/images/design/kitchen-dining-cgi.jpg",
+      alt: "CGI of a kitchen and dining room",
+      label: "Kitchen & dining",
+    },
+  ] satisfies ServicePageImage[],
   project: {
     title: "Princess Gate Court",
     type: "Interior design study",

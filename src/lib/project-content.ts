@@ -146,7 +146,7 @@ function normalizeProject(project: Project): ProjectPageContent {
  * not need to change.
  */
 export async function getProjects(): Promise<Project[]> {
-  return projects;
+  return projects.filter((project) => project.status !== "draft");
 }
 
 export async function getFeaturedProjects({
@@ -157,6 +157,6 @@ export async function getFeaturedProjects({
 }
 
 export async function getProjectBySlug(slug: string): Promise<ProjectPageContent | undefined> {
-  const project = projects.find((item) => item.slug === slug);
+  const project = projects.find((item) => item.slug === slug && item.status !== "draft");
   return project ? normalizeProject(project) : undefined;
 }

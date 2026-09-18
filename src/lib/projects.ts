@@ -11,6 +11,8 @@ export type Project = {
   timeline: string;
   scope: string;
   index: string;
+  /** Drafts are hidden from the index, home gallery and static params until media arrives. */
+  status?: "draft";
   brief: {
     eyebrow: string;
     heading: string;
@@ -26,7 +28,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "chelsea-house",
-    title: "Chelsea House",
+    title: "Chelsea",
     location: "Chelsea Park Gardens",
     postcode: "SW3",
     timeline: "July 2021 - March 2022",
@@ -49,16 +51,16 @@ export const projects: Project[] = [
       "Landscaping for seamless access to the garden",
       "Full interior design & specification",
     ],
-    cover: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
-    hero: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
-    exterior: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea House, SW3" },
+    cover: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea, SW3" },
+    hero: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea, SW3" },
+    exterior: { src: "/images/projects/chelsea-house/exterior.jpg", alt: "Exterior of Chelsea, SW3" },
     gallery: [
-      { src: "/images/projects/chelsea-house/01-dining.jpg", room: "Dining Room", caption: "A travertine table and sculptural seating set against a wall-hung artwork and bespoke, recessed storage.", alt: "Chelsea House dining room" },
-      { src: "/images/projects/chelsea-house/06-living-room.jpg", room: "Living Room", caption: "Custom shelving with carefully proportioned niches frames a sculptural stone fireplace, grounded by layered, tactile textures and the interplay of natural light.", alt: "Chelsea House living room with custom shelving and a stone fireplace" },
-      { src: "/images/projects/chelsea-house/02-kitchen-dining.jpg", room: "Kitchen & Dining", alt: "Chelsea House kitchen and dining hallway" },
-      { src: "/images/projects/chelsea-house/03-bedroom.jpg", room: "Principal Bedroom", alt: "Chelsea House principal bedroom" },
-      { src: "/images/projects/chelsea-house/04-drawing-room.jpg", room: "Drawing Room", caption: "A textured, sculptural sofa and a bespoke glass-topped table compose a refined setting for artful living, against curated works and layered finishes.", alt: "Chelsea House drawing room" },
-      { src: "/images/projects/chelsea-house/05-kitchen-nook.jpg", room: "Kitchen Nook", caption: "A striking marble island and sculptural timber stools pair with custom cabinetry beneath generous natural light.", alt: "Chelsea House kitchen nook" },
+      { src: "/images/projects/chelsea-house/01-dining.jpg", room: "Dining Room", caption: "A travertine table and sculptural seating set against a wall-hung artwork and bespoke, recessed storage.", alt: "Chelsea dining room" },
+      { src: "/images/projects/chelsea-house/06-living-room.jpg", room: "Living Room", caption: "Custom shelving with carefully proportioned niches frames a sculptural stone fireplace, grounded by layered, tactile textures and the interplay of natural light.", alt: "Chelsea living room with custom shelving and a stone fireplace" },
+      { src: "/images/projects/chelsea-house/02-kitchen-dining.jpg", room: "Kitchen & Dining", alt: "Chelsea kitchen and dining hallway" },
+      { src: "/images/projects/chelsea-house/03-bedroom.jpg", room: "Principal Bedroom", alt: "Chelsea principal bedroom" },
+      { src: "/images/projects/chelsea-house/04-drawing-room.jpg", room: "Drawing Room", caption: "A textured, sculptural sofa and a bespoke glass-topped table compose a refined setting for artful living, against curated works and layered finishes.", alt: "Chelsea drawing room" },
+      { src: "/images/projects/chelsea-house/05-kitchen-nook.jpg", room: "Kitchen Nook", caption: "A striking marble island and sculptural timber stools pair with custom cabinetry beneath generous natural light.", alt: "Chelsea kitchen nook" },
     ],
   },
   {
@@ -134,7 +136,7 @@ export const projects: Project[] = [
   },
   {
     slug: "notting-hill-house",
-    title: "Notting Hill House",
+    title: "Notting Hill",
     location: "Hereford Road",
     postcode: "W2",
     timeline: "September 2023 - December 2024",
@@ -158,16 +160,16 @@ export const projects: Project[] = [
       "Full bespoke joinery package",
     ],
     // 01-boot-room.jpg is only 767x1024 in the source deck — too low-res for a cover.
-    cover: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill House, W2" },
+    cover: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill, W2" },
     hero: { src: "/images/projects/notting-hill-house/02-garden-room.jpg", alt: "Garden room at Notting Hill House" },
-    exterior: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill House, W2" },
+    exterior: { src: "/images/projects/notting-hill-house/exterior.jpg", alt: "Exterior of Notting Hill, W2" },
     gallery: [
-      { src: "/images/projects/notting-hill-house/03-kitchen.jpg", room: "Kitchen", caption: "Soft matte cabinetry and a compact island are warmed by oak shelving, brass accents and ambient recessed light.", alt: "Notting Hill House kitchen with a compact island and oak shelving" },
-      { src: "/images/projects/notting-hill-house/01-boot-room.jpg", room: "Boot Room", caption: "Elegant detailing meets a playful run of colourful hooks against a warm, textured wall, placing refined architecture and personality side by side.", alt: "Notting Hill House boot room" },
-      { src: "/images/projects/notting-hill-house/04-kids-bathroom.jpg", room: "Kids Bathroom", alt: "Notting Hill House children's bathroom with colourful patterned tiles" },
-      { src: "/images/projects/notting-hill-house/05-stair-hall.jpg", room: "Stair Hall", caption: "Dark timber treads and minimalist black balusters sit beneath classical ceiling cornices, where a fanlight draws daylight into the hall.", alt: "Notting Hill House stair hall with dark timber treads and black balusters" },
-      { src: "/images/projects/notting-hill-house/06-dressing-room.jpg", room: "Dressing Room", alt: "Notting Hill House dressing room with fitted cabinetry" },
-      { src: "/images/projects/notting-hill-house/02-garden-room.jpg", room: "Garden Room", alt: "Notting Hill House garden room" },
+      { src: "/images/projects/notting-hill-house/03-kitchen.jpg", room: "Kitchen", caption: "Soft matte cabinetry and a compact island are warmed by oak shelving, brass accents and ambient recessed light.", alt: "Notting Hill kitchen with a compact island and oak shelving" },
+      { src: "/images/projects/notting-hill-house/01-boot-room.jpg", room: "Boot Room", caption: "Elegant detailing meets a playful run of colourful hooks against a warm, textured wall, placing refined architecture and personality side by side.", alt: "Notting Hill boot room" },
+      { src: "/images/projects/notting-hill-house/04-kids-bathroom.jpg", room: "Kids Bathroom", alt: "Notting Hill children's bathroom with colourful patterned tiles" },
+      { src: "/images/projects/notting-hill-house/05-stair-hall.jpg", room: "Stair Hall", caption: "Dark timber treads and minimalist black balusters sit beneath classical ceiling cornices, where a fanlight draws daylight into the hall.", alt: "Notting Hill stair hall with dark timber treads and black balusters" },
+      { src: "/images/projects/notting-hill-house/06-dressing-room.jpg", room: "Dressing Room", alt: "Notting Hill dressing room with fitted cabinetry" },
+      { src: "/images/projects/notting-hill-house/02-garden-room.jpg", room: "Garden Room", alt: "Notting Hill garden room" },
     ],
   },
   {
@@ -206,6 +208,27 @@ export const projects: Project[] = [
       { src: "/images/projects/gloucester-walk/05-kitchen.jpg", room: "Kitchen", alt: "Gloucester Walk kitchen" },
       { src: "/images/projects/gloucester-walk/06-bedroom.jpg", room: "Master Bedroom", alt: "Gloucester Walk master bedroom" },
     ],
+  },
+  {
+    slug: "manias",
+    title: "Manias",
+    location: "London",
+    postcode: "",
+    timeline: "",
+    scope: "Residence",
+    index: "06",
+    // Client confirmed this project on 2026-09-18; photography, location and
+    // dates to follow. Remove `status` once cover/hero/gallery are populated.
+    status: "draft",
+    brief: {
+      eyebrow: "Project Brief",
+      heading: "",
+      paragraphs: [],
+    },
+    scopeOfWorks: [],
+    cover: { src: "", alt: "Manias" },
+    hero: { src: "", alt: "Manias" },
+    gallery: [],
   },
 ];
 

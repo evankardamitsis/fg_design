@@ -85,7 +85,7 @@ export default function StudioPage() {
               </TextReveal>
               <Reveal delay={0.08} className="mt-8 max-w-xl space-y-6">
                 <p className="text-base leading-relaxed text-ink/68 md:text-lg">
-                  Fardad Ghodoussi founded FG Design in 2016 after fifteen years at a distinguished design and build practice. His earlier work covered high-end residential, hotel and commercial projects.
+                  Fardad Ghodoussi founded FG Design in 2016, bringing thirty years of experience across high-end residential, hotel and commercial projects, much of it within a distinguished London design and build practice.
                 </p>
                 <p className="text-base leading-relaxed text-ink/68 md:text-lg">
                   He created FG Design around a closer relationship between design and delivery. The same team develops the interiors, coordinates the build and completes the home.
@@ -100,8 +100,8 @@ export default function StudioPage() {
                   <dt className="mt-2 text-sm text-ink/48">Founded</dt>
                 </div>
                 <div>
-                  <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">15 years</dd>
-                  <dt className="mt-2 text-sm text-ink/48">Prior experience</dt>
+                  <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">30 years</dd>
+                  <dt className="mt-2 text-sm text-ink/48">Experience</dt>
                 </div>
                 <div>
                   <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">

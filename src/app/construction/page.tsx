@@ -1,9 +1,10 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { Button } from "@/components/Button";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
-import { Reveal, StaggerReveal } from "@/components/motion/Reveal";
+import { Reveal, RevealMedia, StaggerReveal } from "@/components/motion/Reveal";
 import { StaggerCard } from "@/components/motion/StaggerCard";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { getConstructionPageContent } from "@/lib/service-content";
@@ -62,7 +63,43 @@ export default async function ConstructionPage() {
         </section>
 
         <section className="px-5 py-24 md:px-10 md:py-36 lg:px-14">
-          <div className="mx-auto grid max-w-[1440px] gap-14 md:grid-cols-12 md:gap-8">
+          <div className="mx-auto max-w-[1440px]">
+            <Reveal className="grid gap-8 border-b border-ink/12 pb-12 md:grid-cols-12 md:items-end">
+              <div className="md:col-span-7">
+                <Eyebrow>On site</Eyebrow>
+                <h2 className="mt-7 text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl">
+                  The work behind <span className="font-display italic">the finish.</span>
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-relaxed text-ink/62 md:col-span-4 md:col-start-9 md:text-lg">
+                Structural steel, new floor structures, services and propping, delivered by the same team that designed the rooms above them.
+              </p>
+            </Reveal>
+
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 md:mt-20 md:gap-6 lg:grid-cols-3">
+              {content.site.map((image, index) => (
+                <div key={image.src} className={index % 3 === 1 ? "lg:mt-16" : ""}>
+                  <RevealMedia className="relative aspect-[3/4] overflow-hidden bg-white">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      quality={90}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </RevealMedia>
+                  <Reveal>
+                    <p className="mt-4 font-display text-xl italic text-ink/72">{image.label}</p>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 pb-24 md:px-10 md:pb-36 lg:px-14">
+          <div className="mx-auto grid max-w-[1440px] gap-14 border-t border-ink/12 pt-20 md:grid-cols-12 md:gap-8 md:pt-28">
             <Reveal className="md:col-span-5">
               <h2 className="text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl">
                 One team on <span className="font-display italic">every detail.</span>

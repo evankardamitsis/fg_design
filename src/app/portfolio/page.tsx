@@ -7,15 +7,16 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { PortfolioCategoryNav } from "@/components/PortfolioCategoryNav";
 import { Reveal } from "@/components/motion/Reveal";
 import { getProjects } from "@/lib/project-content";
+import { getCurrentProjects } from "@/lib/current-projects";
 
 export const metadata: Metadata = {
   title: "Portfolio | FG Design Partners",
   description:
-    "Five London residences, 2019 to 2026: Chelsea House, Kensington Palace, Wycombe Square, Notting Hill House, and Gloucester Walk.",
+    "Five London residences, 2019 to 2026: Chelsea, Kensington Palace, Wycombe Square, Notting Hill, and Gloucester Walk.",
 };
 
 export default async function PortfolioPage() {
-  const projects = await getProjects();
+  const [projects, currentProjects] = await Promise.all([getProjects(), getCurrentProjects()]);
 
   return (
     <>
@@ -68,6 +69,35 @@ export default async function PortfolioPage() {
                     <p className="mt-1">{project.timeline}</p>
                   </div>
                 </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-ink px-5 py-24 text-cream md:px-10 md:py-32 lg:px-14">
+        <div className="mx-auto max-w-[1440px]">
+          <Reveal>
+            <Eyebrow tone="cream">Current projects</Eyebrow>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h2 className="mt-8 max-w-3xl text-4xl leading-tight tracking-[-0.035em] md:text-6xl">
+              Currently <span className="font-display italic tracking-[-0.02em]">on site.</span>
+            </h2>
+          </Reveal>
+          <div className="mt-14 divide-y divide-cream/14 border-y border-cream/14 md:mt-20">
+            {currentProjects.map((project) => (
+              <Reveal key={project.title} y={20}>
+                <div className="grid grid-cols-1 gap-3 py-8 md:grid-cols-[2rem_1fr_auto] md:items-baseline md:gap-8 md:py-10">
+                  <span className="font-display italic text-lg text-cream/42">{project.index}</span>
+                  <div>
+                    <h3 className="text-2xl md:text-3xl">{project.title}</h3>
+                    <p className="mt-1 text-sm text-cream/58">
+                      {project.location}, {project.postcode}
+                    </p>
+                  </div>
+                  <p className="text-sm text-cream/50 md:text-right">{project.stage}</p>
+                </div>
               </Reveal>
             ))}
           </div>

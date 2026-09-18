@@ -49,7 +49,28 @@ const commercialProjects: CommercialProject[] = [
       "Coaching & analysis",
       "Main reception",
     ],
-    gallery: [],
+    cover: {
+      src: "/images/commercial/newcastle-united/exterior.jpg",
+      alt: "Newcastle United Training Centre, completed exterior",
+      label: "Completed",
+    },
+    gallery: [
+      {
+        src: "/images/commercial/newcastle-united/cgi-aerial.jpg",
+        alt: "Aerial CGI of the Newcastle United Training Centre proposals",
+        label: "Aerial CGI",
+      },
+      {
+        src: "/images/commercial/newcastle-united/site.jpg",
+        alt: "Steel frame and blockwork rising beside the existing training centre",
+        label: "On site",
+      },
+      {
+        src: "/images/commercial/newcastle-united/exterior.jpg",
+        alt: "Newcastle United Training Centre, completed exterior",
+        label: "Completed",
+      },
+    ],
   },
   {
     slug: "mollies-newcastle",

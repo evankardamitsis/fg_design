@@ -100,7 +100,52 @@ export default async function DesignPage() {
         </section>
 
         <section className="px-5 py-24 md:px-10 md:py-36 lg:px-14">
-          <Reveal className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+          <div className="mx-auto max-w-[1440px]">
+            <Reveal className="grid gap-8 border-b border-ink/12 pb-12 md:grid-cols-12 md:items-end">
+              <div className="md:col-span-7">
+                <Eyebrow>Visualisation</Eyebrow>
+                <h2 className="mt-7 text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl">
+                  Seen before <span className="font-display italic">it is built.</span>
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-relaxed text-ink/62 md:col-span-4 md:col-start-9 md:text-lg">
+                CGI studies test massing, light and material before a decision reaches site, so clients approve what they will actually receive.
+              </p>
+            </Reveal>
+
+            <div className="mt-14 space-y-16 md:mt-20 md:space-y-24">
+              {content.visualisations.map((image, index) => (
+                <div
+                  key={image.src}
+                  className={`grid items-end gap-6 md:grid-cols-12 ${
+                    index % 2 ? "md:[&>*:first-child]:order-2" : ""
+                  }`}
+                >
+                  <RevealMedia
+                    className={`relative aspect-[16/10] overflow-hidden bg-white md:col-span-10 ${
+                      index % 2 ? "md:col-start-3" : ""
+                    }`}
+                  >
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      quality={92}
+                      sizes="(min-width: 768px) 83vw, 100vw"
+                      className="object-cover"
+                    />
+                  </RevealMedia>
+                  <Reveal className={index % 2 ? "md:col-span-2 md:col-start-1" : "md:col-span-2 md:col-start-11"}>
+                    <p className="font-display text-2xl italic text-ink/80">{image.label}</p>
+                  </Reveal>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 pb-24 md:px-10 md:pb-36 lg:px-14">
+          <Reveal className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 border-t border-ink/12 pt-20 md:flex-row md:items-end md:pt-28">
             <h2 className="max-w-3xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl">
               From first study to <span className="font-display italic">resolved space.</span>
             </h2>

@@ -120,7 +120,7 @@ export default async function Home() {
 
         <ParallaxImage
           src="/images/projects/chelsea-house/05-kitchen-nook.jpg"
-          alt="A marble island and bespoke cabinetry at Chelsea House"
+          alt="A marble island and bespoke cabinetry at Chelsea"
           sizes="100vw"
           strength={10}
           className="h-[66vh] min-h-[440px] w-full"
@@ -135,7 +135,7 @@ export default async function Home() {
           </TextReveal>
           <Reveal delay={0.08} className="mt-8 max-w-2xl">
             <p className="text-base leading-relaxed text-ink/68 md:text-lg">
-              Fardad Ghodoussi founded FG Design after fifteen years within a distinguished London design-build practice, bringing deep experience to a more personal studio.
+              Fardad Ghodoussi founded FG Design with thirty years of experience in London design and build, bringing that depth to a more personal studio.
             </p>
           </Reveal>
 
