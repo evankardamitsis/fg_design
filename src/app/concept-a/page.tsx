@@ -82,10 +82,6 @@ export default async function ConceptA() {
               <p className="mt-2 text-sm text-[#ecece7]/48">Founded in London</p>
             </div>
             <div>
-              <p className="text-4xl tracking-[-0.04em] md:text-5xl">12+</p>
-              <p className="mt-2 text-sm text-[#ecece7]/48">Completed projects</p>
-            </div>
-            <div>
               <p className="text-4xl tracking-[-0.04em] md:text-5xl">One</p>
               <p className="mt-2 text-sm text-[#ecece7]/48">Accountable team</p>
             </div>

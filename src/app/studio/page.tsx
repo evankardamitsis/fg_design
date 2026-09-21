@@ -103,12 +103,7 @@ export default function StudioPage() {
                   <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">30 years</dd>
                   <dt className="mt-2 text-sm text-ink/48">Experience</dt>
                 </div>
-                <div>
-                  <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">
-                    <Counter value={12} suffix="+" />
-                  </dd>
-                  <dt className="mt-2 text-sm text-ink/48">Completed projects</dt>
-                </div>
+
               </dl>
             </Reveal>
           </div>

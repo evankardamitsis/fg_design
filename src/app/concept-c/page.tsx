@@ -73,10 +73,7 @@ export default async function ConceptC() {
               <p className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">2016</p>
               <p className="mt-2 text-sm text-ink/48">Established</p>
             </div>
-            <div>
-              <p className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">12+</p>
-              <p className="mt-2 text-sm text-ink/48">Completed projects</p>
-            </div>
+
             <div>
               <p className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">In-house</p>
               <p className="mt-2 text-sm text-ink/48">Specialist team</p>
