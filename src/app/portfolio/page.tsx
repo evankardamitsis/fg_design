@@ -12,7 +12,7 @@ import { getCurrentProjects } from "@/lib/current-projects";
 export const metadata: Metadata = {
   title: "Portfolio | FG Design Partners",
   description:
-    "Five London residences, 2019 to 2026: Chelsea, Kensington Palace, Wycombe Square, Notting Hill, and Gloucester Walk.",
+    "Six London residences, 2019 to 2026: Gloucester Walk, Notting Hill, 18 Stanhope Terrace, Kensington Palace, Chelsea and Wycombe Square.",
 };
 
 export default async function PortfolioPage() {
@@ -28,7 +28,7 @@ export default async function PortfolioPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="mt-8 max-w-3xl text-4xl leading-tight tracking-[-0.035em] md:text-6xl">
-            Five <span className="font-display italic tracking-[-0.02em]">residences.</span>
+            Six <span className="font-display italic tracking-[-0.02em]">residences.</span>
           </h1>
           <p className="mt-4 font-display italic text-xl text-ink/70">
             2019 to 2026, London SW3, W8 and W2

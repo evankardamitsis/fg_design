@@ -40,3 +40,72 @@ html:not(.js) [data-reveal] {
 html:not(.js) [data-page-veil] {
   display: none;
 }
+
+/* Works timeline scrubber: hairline track that fills to the current stage. */
+.works-range {
+  --range-fg: var(--color-ink);
+  --range-bg: var(--color-cream);
+  --range-track: rgb(28 27 27 / 0.18);
+  appearance: none;
+  -webkit-appearance: none;
+  height: 2.75rem;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.works-range--dark {
+  --range-fg: var(--color-cream);
+  --range-bg: var(--color-ink);
+  --range-track: rgb(244 241 238 / 0.2);
+}
+.works-range::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(to right, var(--range-fg) var(--progress, 0%), var(--range-track) var(--progress, 0%));
+}
+.works-range::-moz-range-track {
+  height: 2px;
+  background: var(--range-track);
+}
+.works-range::-moz-range-progress {
+  height: 2px;
+  background: var(--range-fg);
+}
+.works-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  margin-top: calc(-0.6875rem + 1px);
+  border: 2px solid var(--range-fg);
+  border-radius: 9999px;
+  background: var(--range-bg);
+  transition: transform 150ms ease-out;
+}
+.works-range::-moz-range-thumb {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid var(--range-fg);
+  border-radius: 9999px;
+  background: var(--range-bg);
+}
+.works-range:active::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+.works-range:focus-visible {
+  outline: 2px solid var(--range-fg);
+  outline-offset: 4px;
+}
+
+/* Full-screen timeline opens with a short fade rather than a hard cut. */
+.works-fullscreen {
+  animation: works-fullscreen-in 380ms var(--ease-cinematic) both;
+}
+@keyframes works-fullscreen-in {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .works-fullscreen {
+    animation: none;
+  }
+}

@@ -34,7 +34,7 @@ export function ConceptHeader({
             width={1111}
             height={788}
             priority
-            className="h-[3.4rem] w-auto md:h-16"
+            className="h-[4.25rem] w-auto md:h-[5.25rem]"
           />
         </Link>
 

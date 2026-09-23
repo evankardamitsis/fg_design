@@ -210,25 +210,39 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "manias",
-    title: "Manias",
-    location: "London",
-    postcode: "",
-    timeline: "",
-    scope: "Residence",
+    slug: "stanhope-terrace",
+    title: "18 Stanhope Terrace",
+    location: "Hyde Park",
+    postcode: "W2",
+    timeline: "September 2022 - August 2023",
+    scope: "Two-bedroom apartment, Grade II listed building",
     index: "06",
-    // Client confirmed this project on 2026-09-18; photography, location and
-    // dates to follow. Remove `status` once cover/hero/gallery are populated.
-    status: "draft",
     brief: {
       eyebrow: "Project Brief",
-      heading: "",
-      paragraphs: [],
+      heading: "An open plan within a listed envelope.",
+      paragraphs: [
+        "A full reconfiguration of a two-bedroom apartment within a Grade II listed building, with planning secured to remodel the layout and structural openings formed to connect the principal rooms.",
+        "The aim: an open, light-filled home finished to an exacting standard, delivered with care for the building's protected fabric.",
+      ],
     },
-    scopeOfWorks: [],
-    cover: { src: "", alt: "Manias" },
-    hero: { src: "", alt: "Manias" },
-    gallery: [],
+    scopeOfWorks: [
+      "Planning & listed building consent for full reconfiguration",
+      "Structural openings to create an open-plan living space",
+      "Polished plaster wall finishes throughout",
+      "Large-slab travertine bathrooms with monolithic stone basins",
+      "Book-matched stone kitchen with waterfall island",
+      "Full bespoke joinery package",
+      "New engineered parquet flooring throughout",
+    ],
+    // Supplied at 1600px wide — below the 3840px hero target; request originals.
+    cover: { src: "/images/projects/stanhope-terrace/01-living-room.jpg", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
+    hero: { src: "/images/projects/stanhope-terrace/01-living-room.jpg", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
+    gallery: [
+      { src: "/images/projects/stanhope-terrace/01-living-room.jpg", room: "Living Room", caption: "A fluted marble fireplace anchors the room, framed by mirrored panelling that carries light through the new open plan.", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
+      { src: "/images/projects/stanhope-terrace/02-kitchen.jpg", room: "Kitchen", caption: "Dramatic book-matched stone runs from splashback to waterfall island, set against understated handleless cabinetry.", alt: "Book-matched stone island and splashback in the kitchen at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/03-bathroom.jpg", room: "Bathroom", caption: "Large-format silver travertine forms a monolithic carved basin and vanity, paired with brushed-steel fittings and bronze detailing.", alt: "Silver travertine basin and bronze-framed mirror in the bathroom at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/04-bedroom.jpg", room: "Master Bedroom", caption: "Full-height wardrobes in a soft plaster finish keep the room calm and uncluttered beneath a sculptural cocoon pendant.", alt: "Master bedroom with full-height plaster-finish wardrobes at 18 Stanhope Terrace" },
+    ],
   },
 ];
 

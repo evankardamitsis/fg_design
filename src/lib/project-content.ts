@@ -56,7 +56,28 @@ const portraitImages = new Set([
   "/images/projects/notting-hill-house/05-stair-hall.jpg",
   "/images/projects/notting-hill-house/06-dressing-room.jpg",
   "/images/projects/notting-hill-house/exterior.jpg",
+  "/images/projects/stanhope-terrace/02-kitchen.jpg",
+  "/images/projects/stanhope-terrace/03-bathroom.jpg",
 ]);
+
+const MONTHS = [
+  "january", "february", "march", "april", "may", "june",
+  "july", "august", "september", "october", "november", "december",
+];
+
+/** Completion date from a "Month YYYY - Month YYYY" timeline, as a sortable number. */
+function completionKey(timeline: string) {
+  const match = timeline.trim().match(/([a-z]+)\s+(\d{4})$/i);
+  if (!match) return 0;
+  return Number(match[2]) * 12 + MONTHS.indexOf(match[1].toLowerCase());
+}
+
+/** Newest first, renumbered so the index always reads 01, 02, ... in display order. */
+function orderProjects(list: Project[]): Project[] {
+  return [...list]
+    .sort((a, b) => completionKey(b.timeline) - completionKey(a.timeline))
+    .map((project, position) => ({ ...project, index: String(position + 1).padStart(2, "0") }));
+}
 
 function normalizeMedia(
   image: ProjectImage & { room: string; caption?: string }
@@ -146,7 +167,7 @@ function normalizeProject(project: Project): ProjectPageContent {
  * not need to change.
  */
 export async function getProjects(): Promise<Project[]> {
-  return projects.filter((project) => project.status !== "draft");
+  return orderProjects(projects.filter((project) => project.status !== "draft"));
 }
 
 export async function getFeaturedProjects({
@@ -157,6 +178,6 @@ export async function getFeaturedProjects({
 }
 
 export async function getProjectBySlug(slug: string): Promise<ProjectPageContent | undefined> {
-  const project = projects.find((item) => item.slug === slug && item.status !== "draft");
+  const project = (await getProjects()).find((item) => item.slug === slug);
   return project ? normalizeProject(project) : undefined;
 }

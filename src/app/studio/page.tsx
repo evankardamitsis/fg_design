@@ -31,6 +31,10 @@ const capabilities = [
     title: "Interior architectural design",
     description: "Space planning, specification, finishes and styling developed as one complete interior.",
   },
+  {
+    title: "Planning permission",
+    description: "Planning and listed building applications prepared and submitted in-house, with a 100% approval record.",
+  },
 ];
 
 const residentialScales = ["Lateral apartments", "Four-storey townhouses", "Five-storey residences"];
@@ -41,7 +45,7 @@ export default function StudioPage() {
       <Nav variant="solid" />
 
       <main>
-        <section className="mx-auto grid min-h-[calc(100dvh-5rem)] max-w-[1440px] items-center gap-12 px-5 py-16 md:grid-cols-12 md:px-10 md:py-20 lg:px-14">
+        <section className="mx-auto grid min-h-[calc(100dvh-6rem)] md:min-h-[calc(100dvh-7rem)] max-w-[1440px] items-center gap-12 px-5 py-16 md:grid-cols-12 md:px-10 md:py-20 lg:px-14">
           <div className="md:col-span-7 md:pr-8 lg:col-span-6">
             <Reveal>
               <p className="text-xs uppercase tracking-[0.18em] text-ink/48">About FG Design</p>
@@ -90,6 +94,9 @@ export default function StudioPage() {
                 <p className="text-base leading-relaxed text-ink/68 md:text-lg">
                   He created FG Design around a closer relationship between design and delivery. The same team develops the interiors, coordinates the build and completes the home.
                 </p>
+                <p className="text-base leading-relaxed text-ink/68 md:text-lg">
+                  That responsibility starts before work on site. We apply for planning permission on our clients&apos; behalf, including listed building consent, and every application to date has been approved.
+                </p>
               </Reveal>
             </div>
 
@@ -102,6 +109,10 @@ export default function StudioPage() {
                 <div>
                   <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">30 years</dd>
                   <dt className="mt-2 text-sm text-ink/48">Experience</dt>
+                </div>
+                <div>
+                  <dd className="font-display text-4xl italic leading-[1.1] pb-1 md:text-5xl">100%</dd>
+                  <dt className="mt-2 text-sm text-ink/48">Planning approval record</dt>
                 </div>
 
               </dl>

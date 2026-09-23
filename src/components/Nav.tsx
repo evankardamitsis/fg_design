@@ -217,13 +217,13 @@ export function Nav({ variant = "solid" }: { variant?: "solid" | "overlay" }) {
 
   return (
     <div ref={root}>
-      {!isOverlay && <div aria-hidden className="h-20" />}
+      {!isOverlay && <div aria-hidden className="h-24 md:h-28" />}
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
           scrolled && !open ? "bg-cream/92 backdrop-blur-md" : "bg-transparent"
         } ${!isOverlay && !scrolled ? "bg-cream" : ""}`}
       >
-        <div className="mx-auto flex h-20 max-w-[1440px] items-center px-5 md:px-10 lg:px-14">
+        <div className="mx-auto flex h-24 max-w-[1440px] md:h-28 items-center px-5 md:px-10 lg:px-14">
           <Link
             ref={logoLink}
             href="/"
@@ -236,7 +236,7 @@ export function Nav({ variant = "solid" }: { variant?: "solid" | "overlay" }) {
               width={1111}
               height={788}
               priority
-              className="h-[3.35rem] w-auto md:h-14"
+              className="h-[4.25rem] w-auto md:h-[5.25rem]"
             />
           </Link>
 
@@ -298,7 +298,7 @@ export function Nav({ variant = "solid" }: { variant?: "solid" | "overlay" }) {
           inert={!open}
           className="invisible fixed inset-0 z-40 overflow-y-auto bg-ink text-cream [clip-path:inset(0_0_100%_0)]"
         >
-          <div className="mx-auto flex min-h-[100dvh] max-w-[1440px] flex-col px-5 pb-8 pt-24 md:px-10 md:pb-10 lg:px-14">
+          <div className="mx-auto flex min-h-[100dvh] max-w-[1440px] flex-col px-5 pb-8 pt-28 md:px-10 md:pt-32 md:pb-10 lg:px-14">
             <nav aria-label="Menu" className="flex flex-1 items-center py-5 md:py-7">
               <div className="w-full">
                 {links.map((link) => (

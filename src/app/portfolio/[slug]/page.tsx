@@ -7,7 +7,14 @@ import { HeroHeadingSimple } from "@/components/HeroHeadingSimple";
 import { Nav } from "@/components/Nav";
 import { ProjectSections } from "@/components/projects/ProjectSections";
 import { Reveal, RevealMedia } from "@/components/motion/Reveal";
+import { Eyebrow } from "@/components/Eyebrow";
+import { TextReveal } from "@/components/motion/TextReveal";
+import { WorksTimeline } from "@/components/WorksTimeline";
 import { getProjectBySlug, getProjects } from "@/lib/project-content";
+import { getPressForProject } from "@/lib/press";
+import { getWorksTimeline } from "@/lib/works-timeline";
+
+const pressDate = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
 
 export async function generateStaticParams() {
   const projects = await getProjects();
@@ -36,12 +43,17 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [project, projects] = await Promise.all([
+  const [project, projects, press, worksTimeline] = await Promise.all([
     getProjectBySlug(slug),
     getProjects(),
+    getPressForProject(slug),
+    getWorksTimeline(slug),
   ]);
 
   if (!project) notFound();
+
+  const [overview, ...mediaSections] = project.sections;
+  const [startDate, endDate] = project.timeline.split(" - ");
 
   const currentIndex = projects.findIndex((item) => item.slug === slug);
   const next = projects[(currentIndex + 1) % projects.length];
@@ -71,7 +83,11 @@ export default async function ProjectPage({
       </div>
 
       <section className="px-5 py-10 md:px-10 md:py-12 lg:px-14">
-        <Reveal className="mx-auto grid max-w-[1440px] gap-7 border-b border-ink/12 pb-10 text-sm sm:grid-cols-3 md:gap-10 md:pb-12">
+        <Reveal
+          className={`mx-auto grid max-w-[1440px] gap-7 border-b border-ink/12 pb-10 text-sm md:gap-10 md:pb-12 ${
+            press.length ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3"
+          }`}
+        >
           <div>
             <p className="text-ink/46">Location</p>
             <p className="mt-2 text-ink/78">
@@ -86,11 +102,61 @@ export default async function ProjectPage({
             <p className="text-ink/46">Residence</p>
             <p className="mt-2 text-ink/78">{project.scope}</p>
           </div>
+          {press.map((item) => (
+            <div key={item.href}>
+              <p className="text-ink/46">Featured in</p>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-2 block text-ink/78 transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+              >
+                <span className="whitespace-nowrap font-display text-lg italic leading-none text-ink">{item.publication}</span>
+                , {pressDate.format(new Date(item.date))}{" "}
+                <span aria-hidden className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                  ↗
+                </span>
+                <span className="sr-only">(opens in a new tab)</span>
+              </a>
+            </div>
+          ))}
         </Reveal>
       </section>
 
       <main>
-        <ProjectSections sections={project.sections} />
+        <ProjectSections sections={[overview]} />
+
+        {worksTimeline ? (
+          <section id="start-to-finish" className="scroll-mt-24 px-5 pb-24 md:px-10 md:pb-36 lg:px-14">
+            <div className="mx-auto max-w-[1440px] border-t border-ink/12 pt-20 md:pt-28">
+              <Reveal>
+                <Eyebrow>Start to finish</Eyebrow>
+              </Reveal>
+              <TextReveal
+                as="h2"
+                delay={0.04}
+                className="mt-7 max-w-3xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
+              >
+                The extent of <span className="font-display italic tracking-[-0.02em]">the works.</span>
+              </TextReveal>
+              <Reveal delay={0.08} className="mt-6 max-w-2xl">
+                <p className="text-base leading-relaxed text-ink/68 md:text-lg">
+                  Fifteen photographs from the same view, {startDate} to {endDate}. Press play to watch the room go from the space as found to the finished home.
+                </p>
+              </Reveal>
+              <Reveal delay={0.12} className="mt-14 md:mt-20">
+                <WorksTimeline
+                  stages={worksTimeline}
+                  title={`${project.title}, ${project.location}`}
+                  startLabel={startDate}
+                  endLabel={endDate}
+                />
+              </Reveal>
+            </div>
+          </section>
+        ) : null}
+
+        <ProjectSections sections={mediaSections} />
 
         <section className="bg-ink px-5 pb-24 pt-32 text-cream md:px-10 md:pb-36 md:pt-44 lg:px-14">
           <div className="mx-auto max-w-[1440px] border-t border-cream/16 pt-10">

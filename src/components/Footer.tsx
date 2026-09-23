@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/Button";
 import { Reveal } from "@/components/motion/Reveal";
@@ -21,7 +22,15 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
       <div className="mx-auto max-w-7xl px-6 py-16 md:px-10">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
-            <span className="block font-display italic text-2xl">FG Design Partners</span>
+            <Link href="/" className="inline-block" aria-label="FG Design Partners, home">
+              <Image
+                src="/logo-white.png"
+                alt="FG Design Partners"
+                width={1111}
+                height={788}
+                className="h-24 w-auto md:h-28"
+              />
+            </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/70">
               Turnkey design and build for London&apos;s most distinguished homes.
               One in-house team, from concept through completion.
@@ -35,6 +44,7 @@ export function Footer({ showCta = true }: { showCta?: boolean }) {
               <li><Link href="/portfolio/commercial" className="hover:opacity-70">Commercial</Link></li>
               <li><Link href="/construction" className="hover:opacity-70">Construction</Link></li>
               <li><Link href="/design" className="hover:opacity-70">Design</Link></li>
+              <li><Link href="/#press" className="hover:opacity-70">Press</Link></li>
             </ul>
           </div>
           <div>

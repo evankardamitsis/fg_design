@@ -5,13 +5,17 @@ import { Footer } from "@/components/Footer";
 import { HeroCinematic } from "@/components/HeroCinematic";
 import { HeroHeading } from "@/components/HeroHeading";
 import { Nav } from "@/components/Nav";
+import { PressSection } from "@/components/PressSection";
 import { ProcessSequence } from "@/components/ProcessSequence";
+import { WorksTimelineBanner } from "@/components/WorksTimelineBanner";
 import { Counter } from "@/components/motion/Counter";
 import { ParallaxImage } from "@/components/motion/Parallax";
 import { Reveal, StaggerReveal } from "@/components/motion/Reveal";
 import { StaggerCard } from "@/components/motion/StaggerCard";
 import { TextReveal } from "@/components/motion/TextReveal";
-import { getFeaturedProjects } from "@/lib/project-content";
+import { getFeaturedProjects, getProjectBySlug } from "@/lib/project-content";
+import { FEATURED_TIMELINE_SLUG, getWorksTimeline } from "@/lib/works-timeline";
+import { getPress } from "@/lib/press";
 
 const delivery = [
   {
@@ -36,7 +40,12 @@ const capabilities = [
 ];
 
 export default async function Home() {
-  const featuredProjects = await getFeaturedProjects();
+  const [featuredProjects, press, timelineProject, timelineStages] = await Promise.all([
+    getFeaturedProjects(),
+    getPress(),
+    getProjectBySlug(FEATURED_TIMELINE_SLUG),
+    getWorksTimeline(FEATURED_TIMELINE_SLUG),
+  ]);
 
   return (
     <>
@@ -112,6 +121,10 @@ export default async function Home() {
 
         <ProcessSequence steps={delivery} />
 
+        {timelineProject && timelineStages ? (
+          <WorksTimelineBanner project={timelineProject} stages={timelineStages} />
+        ) : null}
+
         <ParallaxImage
           src="/images/projects/chelsea-house/05-kitchen-nook.jpg"
           alt="A marble island and bespoke cabinetry at Chelsea"
@@ -142,6 +155,8 @@ export default async function Home() {
             ))}
           </StaggerReveal>
         </section>
+
+        <PressSection items={press} />
       </main>
 
       <Footer />
