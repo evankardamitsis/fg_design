@@ -234,14 +234,18 @@ export const projects: Project[] = [
       "Full bespoke joinery package",
       "New engineered parquet flooring throughout",
     ],
-    // Supplied at 1600px wide — below the 3840px hero target; request originals.
+    // Photography from the studio's final set (2560px long edge).
     cover: { src: "/images/projects/stanhope-terrace/01-living-room.jpg", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
     hero: { src: "/images/projects/stanhope-terrace/01-living-room.jpg", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
     gallery: [
       { src: "/images/projects/stanhope-terrace/01-living-room.jpg", room: "Living Room", caption: "A fluted marble fireplace anchors the room, framed by mirrored panelling that carries light through the new open plan.", alt: "Living room with fluted marble fireplace and mirrored panelling at 18 Stanhope Terrace, W2" },
-      { src: "/images/projects/stanhope-terrace/02-kitchen.jpg", room: "Kitchen", caption: "Dramatic book-matched stone runs from splashback to waterfall island, set against understated handleless cabinetry.", alt: "Book-matched stone island and splashback in the kitchen at 18 Stanhope Terrace" },
-      { src: "/images/projects/stanhope-terrace/03-bathroom.jpg", room: "Bathroom", caption: "Large-format silver travertine forms a monolithic carved basin and vanity, paired with brushed-steel fittings and bronze detailing.", alt: "Silver travertine basin and bronze-framed mirror in the bathroom at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/05-kitchen-view.jpg", room: "Kitchen", alt: "View from the living room through the new structural opening to the kitchen at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/02-kitchen.jpg", room: "Kitchen Detail", caption: "Dramatic book-matched stone runs from splashback to waterfall island, set against understated handleless cabinetry.", alt: "Book-matched stone island and splashback in the kitchen at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/06-dining-room.jpg", room: "Dining Room", alt: "Dining room with parquet flooring and a sculptural pendant at 18 Stanhope Terrace" },
       { src: "/images/projects/stanhope-terrace/04-bedroom.jpg", room: "Master Bedroom", caption: "Full-height wardrobes in a soft plaster finish keep the room calm and uncluttered beneath a sculptural cocoon pendant.", alt: "Master bedroom with full-height plaster-finish wardrobes at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/03-bathroom.jpg", room: "Bathroom", caption: "Large-format silver travertine forms a monolithic carved basin and vanity, paired with brushed-steel fittings and bronze detailing.", alt: "Silver travertine basin and bronze-framed mirror in the bathroom at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/07-bath.jpg", room: "Bath", alt: "Travertine-lined bath beneath a sash window at 18 Stanhope Terrace" },
+      { src: "/images/projects/stanhope-terrace/08-study.jpg", room: "Study", alt: "Study with a sculptural desk and green rug at 18 Stanhope Terrace" },
     ],
   },
 ];

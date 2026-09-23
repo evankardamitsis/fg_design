@@ -58,6 +58,9 @@ const portraitImages = new Set([
   "/images/projects/notting-hill-house/exterior.jpg",
   "/images/projects/stanhope-terrace/02-kitchen.jpg",
   "/images/projects/stanhope-terrace/03-bathroom.jpg",
+  "/images/projects/stanhope-terrace/05-kitchen-view.jpg",
+  "/images/projects/stanhope-terrace/07-bath.jpg",
+  "/images/projects/stanhope-terrace/08-study.jpg",
 ]);
 
 const MONTHS = [
