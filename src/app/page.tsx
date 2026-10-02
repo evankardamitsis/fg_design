@@ -122,7 +122,7 @@ export default async function Home() {
         <ProcessSequence steps={delivery} />
 
         {timelineProject && timelineStages ? (
-          <WorksTimelineBanner project={timelineProject} stages={timelineStages} />
+          <WorksTimelineBanner project={timelineProject} stages={timelineStages.stages} />
         ) : null}
 
         <ParallaxImage

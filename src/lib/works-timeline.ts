@@ -1,8 +1,25 @@
 export type WorksStage = {
   image: string;
-  phase: string;
   name: string;
   caption: string;
+  /** Grouping shown above the stage name, e.g. Demolition. Optional. */
+  phase?: string;
+  /** e.g. March 2025. Shown beside the phase when present. */
+  dateLabel?: string;
+  alt?: string;
+  credit?: string;
+  /** Pixel size; lets non-portrait photos letterbox instead of being cropped to the tall frame. */
+  width?: number;
+  height?: number;
+};
+
+export type WorksTimelineData = {
+  eyebrow: string;
+  /** Plain part, then the italic part. */
+  heading: [string, string];
+  /** `{start}` and `{end}` are replaced with the project's dates. */
+  intro: string;
+  stages: WorksStage[];
 };
 
 /**
@@ -27,12 +44,40 @@ const nottingHill: WorksStage[] = [
   { image: "/images/timeline/15-completed.jpg", phase: "Complete", name: "The finished home", caption: "One light-filled, open-plan space to the garden — the same view, transformed end to end." },
 ];
 
+/**
+ * Gloucester Walk (Kensington, W2): eight stages from several viewpoints, with
+ * Fardad's own dates. The square and landscape shots letterbox in the player.
+ */
+const gloucesterWalk: WorksStage[] = [
+  { image: "/images/projects/gloucester-walk/timeline/01-before.jpg", dateLabel: "June 2024", name: "Before", caption: "The house as we found it: a conventional sequence of separate rooms, with the original cornicing and bay windows still intact.", alt: "Living room at Gloucester Walk before works, with a corner sofa beside the bay window", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/02-strip-out.jpg", dateLabel: "January 2025", name: "Strip-out", caption: "Partitions removed back to the timber frame, opening a clear line from the front bay through to the garden.", alt: "Interior stripped back to exposed timber studwork and ceiling joists", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/03-structure.jpg", dateLabel: "March 2025", name: "Structural openings", caption: "New steel beams installed on temporary propping to carry the floors above and form the open-plan connection between rooms.", alt: "New steel beams supported on temporary props, with a material lift on site", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/04-first-fix.jpg", dateLabel: "August 2025", name: "First fix & boarding", caption: "Services run, ceilings boarded and walls prepared, with the restored bay window framing the end of the room.", alt: "Boarded ceilings and prepared walls looking towards the bay window", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/05-underfloor-heating.jpg", dateLabel: "September 2025", name: "Underfloor heating", caption: "Low-profile underfloor heating laid continuously through the enfilade, freeing the walls from radiators.", alt: "Underfloor heating panels laid through the full length of the ground floor", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/06-plaster-and-windows.jpg", dateLabel: "November 2025", name: "Plaster & sash windows", caption: "Walls skimmed and the original sash windows and panelled bay refurbished and protected for the finishing trades.", alt: "Freshly plastered front room with refurbished sash bay window", width: 900, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/07-joinery-and-flooring.jpg", dateLabel: "January 2026", name: "Joinery & flooring", caption: "Oak joinery with integrated lighting installed and herringbone parquet laid, with the fireplace and lighting in place for snagging.", alt: "Lit oak shelving beside herringbone parquet leading to the front bay", width: 1600, height: 1600 },
+  { image: "/images/projects/gloucester-walk/timeline/08-complete.jpg", dateLabel: "January 2026", name: "Complete", caption: "The finished living room: oak joinery and a stone-ledged fireplace, herringbone parquet, and the bay window returned to its full proportion beside a steel-framed arched glazed screen.", alt: "Completed living room at Gloucester Walk with oak joinery, fireplace, herringbone floor and curtained bay window", width: 2000, height: 1500, credit: "Photography: Atelier NM" },
+];
+
 /** Keyed by project slug; a project page renders the timeline when it has one. */
-const timelines: Record<string, WorksStage[]> = {
-  "notting-hill-house": nottingHill,
+const timelines: Record<string, WorksTimelineData> = {
+  "notting-hill-house": {
+    eyebrow: "Start to finish",
+    heading: ["The extent of", "the works."],
+    intro:
+      "Fifteen photographs from the same view, {start} to {end}. Press play to watch the room go from the space as found to the finished home.",
+    stages: nottingHill,
+  },
+  "gloucester-walk": {
+    eyebrow: "Process",
+    heading: ["From strip-out to", "handover."],
+    intro:
+      "Fifteen months on site, recorded from the same viewpoints as the house was taken back to its structure and rebuilt around a new open plan.",
+    stages: gloucesterWalk,
+  },
 };
 
-export async function getWorksTimeline(slug: string): Promise<WorksStage[] | undefined> {
+export async function getWorksTimeline(slug: string): Promise<WorksTimelineData | undefined> {
   return timelines[slug];
 }
 

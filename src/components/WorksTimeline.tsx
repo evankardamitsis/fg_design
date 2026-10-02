@@ -67,7 +67,7 @@ export function WorksTimeline({
 
   const last = stages.length - 1;
   const stage = stages[index];
-  const phases = [...new Set(stages.map((item) => item.phase))];
+  const phases = [...new Set(stages.flatMap((item) => (item.phase ? [item.phase] : [])))];
 
   const clamp = useCallback((value: number) => Math.max(0, Math.min(last, value)), [last]);
 
@@ -182,12 +182,15 @@ export function WorksTimeline({
           <Image
             key={item.image}
             src={item.image}
-            alt={`${item.name}, stage ${position + 1} of ${stages.length}`}
+            alt={item.alt ?? `${item.name}, stage ${position + 1} of ${stages.length}`}
             fill
             quality={90}
             sizes={sizes}
             aria-hidden={position !== index}
-            className={`object-cover object-[center_42%] transition-opacity duration-[450ms] ease-out motion-reduce:transition-none ${
+            className={`${
+              // The frame is tall; square and landscape shots letterbox rather than lose their sides.
+              item.width && item.height && item.width >= item.height ? "object-contain" : "object-cover object-[center_42%]"
+            } transition-opacity duration-[450ms] ease-out motion-reduce:transition-none ${
               position === index ? "opacity-100" : "opacity-0"
             }`}
           />
@@ -201,13 +204,16 @@ export function WorksTimeline({
 
   const stageText = (tone: Tone) => (
     <div aria-live="polite">
-      <p className={`text-xs uppercase tracking-[0.18em] ${tones[tone].label}`}>{stage.phase}</p>
+      <p className={`text-xs uppercase tracking-[0.18em] ${tones[tone].label}`}>
+        {[stage.phase, stage.dateLabel].filter(Boolean).join(" · ")}
+      </p>
       <h3 className="mt-4 font-display text-4xl italic leading-[1.08] tracking-[-0.02em] md:text-5xl">
         {stage.name}
       </h3>
       <p className={`mt-5 min-h-[4.8em] max-w-md text-base leading-relaxed ${tones[tone].caption}`}>
         {stage.caption}
       </p>
+      {stage.credit ? <p className={`mt-2 text-xs ${tones[tone].label}`}>{stage.credit}</p> : null}
     </div>
   );
 
@@ -256,19 +262,21 @@ export function WorksTimeline({
             {endLabel}
           </button>
         </div>
-        <ul className={`mt-6 hidden justify-between gap-4 whitespace-nowrap border-t pt-5 text-xs uppercase tracking-[0.18em] md:flex ${t.rule}`}>
-          {phases.map((phase) => (
-            <li key={phase}>
-              <button
-                type="button"
-                onClick={() => go(stages.findIndex((item) => item.phase === phase))}
-                className={`transition-colors ${phase === stage.phase ? t.strong : `${t.faint} ${t.muted}`}`}
-              >
-                {phase}
-              </button>
-            </li>
-          ))}
-        </ul>
+        {phases.length ? (
+          <ul className={`mt-6 hidden justify-between gap-4 whitespace-nowrap border-t pt-5 text-xs uppercase tracking-[0.18em] md:flex ${t.rule}`}>
+            {phases.map((phase) => (
+              <li key={phase}>
+                <button
+                  type="button"
+                  onClick={() => go(stages.findIndex((item) => item.phase === phase))}
+                  className={`transition-colors ${phase === stage.phase ? t.strong : `${t.faint} ${t.muted}`}`}
+                >
+                  {phase}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     );
   };

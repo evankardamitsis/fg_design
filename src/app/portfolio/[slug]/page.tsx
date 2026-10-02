@@ -9,11 +9,9 @@ import { ProjectSections } from "@/components/projects/ProjectSections";
 import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
 import { TextReveal } from "@/components/motion/TextReveal";
-import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { WorksTimeline } from "@/components/WorksTimeline";
 import { getProjectBySlug, getProjects } from "@/lib/project-content";
 import { getPressForProject } from "@/lib/press";
-import { getProcessTimeline } from "@/lib/process-timeline";
 import { getWorksTimeline } from "@/lib/works-timeline";
 
 const pressDate = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
@@ -45,12 +43,11 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [project, projects, press, worksTimeline, processTimeline] = await Promise.all([
+  const [project, projects, press, worksTimeline] = await Promise.all([
     getProjectBySlug(slug),
     getProjects(),
     getPressForProject(slug),
     getWorksTimeline(slug),
-    getProcessTimeline(slug),
   ]);
 
   if (!project) notFound();
@@ -133,23 +130,24 @@ export default async function ProjectPage({
           <section id="start-to-finish" className="scroll-mt-24 px-5 pb-24 md:px-10 md:pb-36 lg:px-14">
             <div className="mx-auto max-w-[1440px] border-t border-ink/12 pt-20 md:pt-28">
               <Reveal>
-                <Eyebrow>Start to finish</Eyebrow>
+                <Eyebrow>{worksTimeline.eyebrow}</Eyebrow>
               </Reveal>
               <TextReveal
                 as="h2"
                 delay={0.04}
                 className="mt-7 max-w-3xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
               >
-                The extent of <span className="font-display italic tracking-[-0.02em]">the works.</span>
+                {worksTimeline.heading[0]}{" "}
+                <span className="font-display italic tracking-[-0.02em]">{worksTimeline.heading[1]}</span>
               </TextReveal>
               <Reveal delay={0.08} className="mt-6 max-w-2xl">
                 <p className="text-base leading-relaxed text-ink/68 md:text-lg">
-                  Fifteen photographs from the same view, {startDate} to {endDate}. Press play to watch the room go from the space as found to the finished home.
+                  {worksTimeline.intro.replace("{start}", startDate).replace("{end}", endDate)}
                 </p>
               </Reveal>
               <Reveal delay={0.12} className="mt-14 md:mt-20">
                 <WorksTimeline
-                  stages={worksTimeline}
+                  stages={worksTimeline.stages}
                   title={`${project.title}, ${project.location}`}
                   startLabel={startDate}
                   endLabel={endDate}
@@ -158,8 +156,6 @@ export default async function ProjectPage({
             </div>
           </section>
         ) : null}
-
-        {processTimeline ? <ProcessTimeline timeline={processTimeline} /> : null}
 
         <ProjectSections sections={mediaSections} />
 
