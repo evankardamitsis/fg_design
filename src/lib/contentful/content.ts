@@ -10,13 +10,21 @@ import type { Project, ProjectImage } from "@/lib/projects";
  * noticing. Field ids come from scripts/contentful/model.ts.
  *
  * Only used when the delivery env vars are present; otherwise the gateways keep
- * reading the local files (handy for local work without credentials).
+ * reading the local files (handy for local work without credentials). Those
+ * files are a frozen snapshot: Contentful is the source of truth.
  */
 
 const env = (name: string) => process.env[name]?.trim() || undefined;
 
 export function contentfulEnabled() {
-  return Boolean(env("CONTENTFUL_SPACE_ID") && env("CONTENTFUL_DELIVERY_TOKEN"));
+  const configured = Boolean(env("CONTENTFUL_SPACE_ID") && env("CONTENTFUL_DELIVERY_TOKEN"));
+  // Production must never fall back to the local snapshot: it would rebuild with
+  // stale data and silently hide every edit made in Contentful. A failed build
+  // keeps the current deployment live instead.
+  if (!configured && process.env.VERCEL_ENV === "production") {
+    throw new Error("Contentful env vars missing in production (CONTENTFUL_SPACE_ID / CONTENTFUL_DELIVERY_TOKEN).");
+  }
+  return configured;
 }
 
 let client: ReturnType<typeof createClient> | null = null;
