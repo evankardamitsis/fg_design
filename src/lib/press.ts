@@ -1,3 +1,5 @@
+import { contentfulEnabled, fetchPress } from "@/lib/contentful/content";
+
 export type PressItem = {
   publication: string;
   title: string;
@@ -11,10 +13,10 @@ export type PressItem = {
 };
 
 /**
- * Press coverage, newest first. Local source until Contentful is connected;
- * the Press section only consumes getPress().
+ * Press coverage, newest first. Contentful when configured, otherwise this
+ * local list; the Press section only consumes getPress().
  */
-const press: PressItem[] = [
+export const press: PressItem[] = [
   {
     publication: "AD Italia",
     title: "Il pied-à-terre a Londra di una interior designer, costruito attorno ad affetti e passioni",
@@ -27,7 +29,8 @@ const press: PressItem[] = [
 ];
 
 export async function getPress(): Promise<PressItem[]> {
-  return [...press].sort((a, b) => b.date.localeCompare(a.date));
+  const items = contentfulEnabled() ? await fetchPress() : press;
+  return [...items].sort((a, b) => b.date.localeCompare(a.date));
 }
 
 export async function getPressForProject(slug: string): Promise<PressItem[]> {

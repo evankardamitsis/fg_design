@@ -1,3 +1,4 @@
+import { contentfulEnabled, fetchResidentialProjects } from "@/lib/contentful/content";
 import { projects, type Project, type ProjectImage } from "@/lib/projects";
 
 type FeaturedProjectOptions = {
@@ -87,7 +88,14 @@ function normalizeMedia(
 ): ProjectMediaItem {
   return {
     ...image,
-    orientation: portraitImages.has(image.src) ? "portrait" : "landscape",
+    orientation:
+      image.width && image.height
+        ? image.height > image.width
+          ? "portrait"
+          : "landscape"
+        : portraitImages.has(image.src)
+          ? "portrait"
+          : "landscape",
   };
 }
 
@@ -164,13 +172,15 @@ function normalizeProject(project: Project): ProjectPageContent {
 /**
  * Project content gateway.
  *
- * The UI only consumes these normalized queries. When Contentful is connected,
- * replace the local source and map its ordered section entries to
- * ProjectPageSection. The page templates, home gallery and portfolio index do
- * not need to change.
+ * The UI only consumes these normalized queries. Source is Contentful when its
+ * delivery env vars are set, otherwise the local data in projects.ts. Either way
+ * the projects are ordered newest first and numbered here.
  */
 export async function getProjects(): Promise<Project[]> {
-  return orderProjects(projects.filter((project) => project.status !== "draft"));
+  const source = contentfulEnabled()
+    ? await fetchResidentialProjects()
+    : projects.filter((project) => project.status !== "draft");
+  return orderProjects(source);
 }
 
 export async function getFeaturedProjects({

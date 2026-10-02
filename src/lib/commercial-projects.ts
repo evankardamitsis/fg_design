@@ -1,3 +1,5 @@
+import { contentfulEnabled, fetchCommercialProjects } from "@/lib/contentful/content";
+
 export type CommercialProjectImage = {
   src: string;
   alt: string;
@@ -19,7 +21,8 @@ export type CommercialProject = {
   gallery: CommercialProjectImage[];
 };
 
-const commercialProjects: CommercialProject[] = [
+/** Local source; also what the Contentful seed and parity check read. */
+export const commercialProjects: CommercialProject[] = [
   {
     slug: "newcastle-united-training-ground",
     index: "01",
@@ -125,15 +128,15 @@ const commercialProjects: CommercialProject[] = [
 ];
 
 /**
- * Commercial content gateway. Replace this local source with Contentful entries
- * after design sign-off; the index and project templates can remain unchanged.
+ * Commercial content gateway: Contentful when configured, otherwise the local
+ * list above. The index and project templates do not change either way.
  */
 export async function getCommercialProjects(): Promise<CommercialProject[]> {
-  return commercialProjects;
+  return contentfulEnabled() ? fetchCommercialProjects() : commercialProjects;
 }
 
 export async function getCommercialProjectBySlug(
   slug: string
 ): Promise<CommercialProject | undefined> {
-  return commercialProjects.find((project) => project.slug === slug);
+  return (await getCommercialProjects()).find((project) => project.slug === slug);
 }

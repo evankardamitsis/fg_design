@@ -1,6 +1,9 @@
 export type ProjectImage = {
   src: string;
   alt: string;
+  /** Known for CMS images; local images fall back to the portrait list in project-content. */
+  width?: number;
+  height?: number;
 };
 
 export type Project = {

@@ -1,3 +1,5 @@
+import { contentfulEnabled, fetchCurrentProjects } from "@/lib/contentful/content";
+
 export type CurrentProject = {
   index: string;
   title: string;
@@ -6,7 +8,8 @@ export type CurrentProject = {
   stage: string;
 };
 
-const currentProjects: CurrentProject[] = [
+/** Local source; also what the Contentful seed and parity check read. */
+export const currentProjects: CurrentProject[] = [
   {
     index: "01",
     title: "41 Castelnau",
@@ -23,7 +26,7 @@ const currentProjects: CurrentProject[] = [
   },
 ];
 
-/** Current-projects gateway; swap for Contentful entries after sign-off. */
+/** Current-projects gateway: Contentful when configured, otherwise the local list. */
 export async function getCurrentProjects(): Promise<CurrentProject[]> {
-  return currentProjects;
+  return contentfulEnabled() ? fetchCurrentProjects() : currentProjects;
 }

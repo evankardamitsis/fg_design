@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
     // AVIF first: roughly half the bytes of JPEG at matching quality, which is
     // what lets the hero stay visually lossless without a heavy download.
     formats: ["image/avif", "image/webp"],
+    // Project photography managed in Contentful.
+    remotePatterns: [{ protocol: "https", hostname: "images.ctfassets.net" }],
   },
 };
 
