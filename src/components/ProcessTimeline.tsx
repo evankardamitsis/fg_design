@@ -16,7 +16,7 @@ const columnInset =
   "[--gutter:1.25rem] md:[--gutter:2.5rem] lg:[--gutter:3.5rem] [--inset:max(var(--gutter),calc((100vw-1440px)/2+var(--gutter)))]";
 
 const arrowClass =
-  "flex size-11 items-center justify-center border border-ink/20 text-lg transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink disabled:pointer-events-none disabled:opacity-30 motion-reduce:transition-none";
+  "flex size-12 items-center justify-center border border-ink text-lg transition-colors duration-200 hover:bg-ink hover:text-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink disabled:pointer-events-none disabled:border-ink/20 disabled:text-ink/30 motion-reduce:transition-none";
 
 export function ProcessTimeline({ timeline }: { timeline: ProcessTimelineData }) {
   const track = useRef<HTMLOListElement>(null);
@@ -71,40 +71,16 @@ export function ProcessTimeline({ timeline }: { timeline: ProcessTimelineData })
           <Reveal>
             <Eyebrow>{timeline.eyebrow}</Eyebrow>
           </Reveal>
-          <div className="mt-7 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-            <div>
-              <TextReveal
-                as="h2"
-                delay={0.04}
-                className="max-w-3xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
-              >
-                {timeline.heading}
-              </TextReveal>
-              <Reveal delay={0.08} className="mt-6 max-w-2xl">
-                <p className="text-base leading-relaxed text-ink/68 md:text-lg">{timeline.intro}</p>
-              </Reveal>
-            </div>
-            <div className="hidden gap-2 md:flex">
-              <button
-                type="button"
-                className={arrowClass}
-                onClick={() => scrollByCard(-1)}
-                disabled={atStart}
-                aria-label="Previous stage"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                className={arrowClass}
-                onClick={() => scrollByCard(1)}
-                disabled={atEnd}
-                aria-label="Next stage"
-              >
-                →
-              </button>
-            </div>
-          </div>
+          <TextReveal
+            as="h2"
+            delay={0.04}
+            className="mt-7 max-w-3xl text-4xl leading-[1.04] tracking-[-0.035em] md:text-6xl"
+          >
+            {timeline.heading}
+          </TextReveal>
+          <Reveal delay={0.08} className="mt-6 max-w-2xl">
+            <p className="text-base leading-relaxed text-ink/68 md:text-lg">{timeline.intro}</p>
+          </Reveal>
         </div>
       </div>
 
@@ -157,12 +133,32 @@ export function ProcessTimeline({ timeline }: { timeline: ProcessTimelineData })
         </ol>
       </Reveal>
 
-      <div aria-hidden className="mx-auto mt-8 hidden max-w-[1440px] px-5 md:block md:px-10 lg:px-14">
-        <div className="relative h-px bg-ink/14">
+      <div className="mx-auto mt-10 hidden max-w-[1440px] items-center gap-8 px-5 md:flex md:px-10 lg:px-14">
+        <div aria-hidden className="relative h-px flex-1 bg-ink/14">
           <span
             ref={bar}
             className="absolute -top-px left-0 h-[3px] w-[12.5%] bg-ink transition-[width] duration-200 motion-reduce:transition-none"
           />
+        </div>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className={arrowClass}
+            onClick={() => scrollByCard(-1)}
+            disabled={atStart}
+            aria-label="Previous stage"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            className={arrowClass}
+            onClick={() => scrollByCard(1)}
+            disabled={atEnd}
+            aria-label="Next stage"
+          >
+            →
+          </button>
         </div>
       </div>
     </section>
