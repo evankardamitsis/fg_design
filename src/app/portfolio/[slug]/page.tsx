@@ -9,9 +9,11 @@ import { ProjectSections } from "@/components/projects/ProjectSections";
 import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 import { Eyebrow } from "@/components/Eyebrow";
 import { TextReveal } from "@/components/motion/TextReveal";
+import { ProcessTimeline } from "@/components/ProcessTimeline";
 import { WorksTimeline } from "@/components/WorksTimeline";
 import { getProjectBySlug, getProjects } from "@/lib/project-content";
 import { getPressForProject } from "@/lib/press";
+import { getProcessTimeline } from "@/lib/process-timeline";
 import { getWorksTimeline } from "@/lib/works-timeline";
 
 const pressDate = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric", timeZone: "UTC" });
@@ -43,11 +45,12 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [project, projects, press, worksTimeline] = await Promise.all([
+  const [project, projects, press, worksTimeline, processTimeline] = await Promise.all([
     getProjectBySlug(slug),
     getProjects(),
     getPressForProject(slug),
     getWorksTimeline(slug),
+    getProcessTimeline(slug),
   ]);
 
   if (!project) notFound();
@@ -155,6 +158,8 @@ export default async function ProjectPage({
             </div>
           </section>
         ) : null}
+
+        {processTimeline ? <ProcessTimeline timeline={processTimeline} /> : null}
 
         <ProjectSections sections={mediaSections} />
 
