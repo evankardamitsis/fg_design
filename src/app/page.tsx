@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { EditorialProjectGallery } from "@/components/concepts/EditorialProjectGallery";
+import { EditorialProjectGallery } from "@/components/EditorialProjectGallery";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Footer } from "@/components/Footer";
 import { HeroCinematic } from "@/components/HeroCinematic";
