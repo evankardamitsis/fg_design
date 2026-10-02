@@ -69,10 +69,19 @@ function assetId(src: string) {
 }
 
 const assets = new Map<string, AssetPlan>();
-function registerAsset(img: { src: string; alt: string }): string {
+/**
+ * One asset per file. The asset Description is the alt text the site uses for
+ * cover/hero/exterior images (gallery items carry their own alt), so when a file
+ * is used both ways the cover/hero wording wins.
+ */
+function registerAsset(img: { src: string; alt: string }, primary = false): string {
   const id = assetId(img.src);
   const seenSrc = assets.get(id);
   if (seenSrc && seenSrc.src !== img.src) problem(`asset id collision: ${img.src} vs ${seenSrc.src}`);
+  if (seenSrc && primary && img.alt) {
+    seenSrc.title = trunc(img.alt);
+    seenSrc.description = img.alt;
+  }
   if (!seenSrc) {
     const ext = extname(img.src).toLowerCase();
     const contentType = MIME[ext];
@@ -112,8 +121,8 @@ async function build() {
         title: p.title, slug: p.slug, category: "Residential", location: p.location, postcode: p.postcode,
         ...tl, scope: p.scope, briefHeading: p.brief.heading, brief: p.brief.paragraphs.join("\n\n"),
         scopeOfWorks: p.scopeOfWorks,
-        cover: { asset: registerAsset(p.cover) }, hero: p.hero && { asset: registerAsset(p.hero) },
-        exterior: p.exterior && { asset: registerAsset(p.exterior) },
+        cover: { asset: registerAsset(p.cover, true) }, hero: p.hero && { asset: registerAsset(p.hero, true) },
+        exterior: p.exterior && { asset: registerAsset(p.exterior, true) },
         gallery: gal.map((id) => ({ entry: id })),
       },
     });
@@ -130,7 +139,7 @@ async function build() {
         title: c.title, slug: c.slug, category: "Commercial", location: c.location, sector: c.sector, role: c.role,
         briefHeading: c.heading, brief: c.paragraphs.join("\n\n"),
         facts: c.facts.map((f) => `${f.label}: ${f.value}`), scopeOfWorks: c.facilities,
-        cover: coverSrc && { asset: registerAsset(coverSrc) }, coverLabel: coverSrc?.label,
+        cover: coverSrc && { asset: registerAsset(coverSrc, true) }, coverLabel: coverSrc?.label,
         gallery: gal.map((id) => ({ entry: id })),
       },
     });
@@ -228,7 +237,14 @@ function validate(entries: EntryPlan[]) {
 // ---------------------------------------------------------------- Contentful writes
 
 type AnyObj = Record<string, any>;
-const sameJson = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+/** Key-order-insensitive: Contentful returns fields in model order, payloads may differ. */
+const stable = (value: unknown): unknown =>
+  Array.isArray(value)
+    ? value.map(stable)
+    : value && typeof value === "object"
+      ? Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable((value as AnyObj)[key])]))
+      : value;
+const sameJson = (a: unknown, b: unknown) => JSON.stringify(stable(a)) === JSON.stringify(stable(b));
 const isPublishedClean = (sys: AnyObj) => !!sys.publishedVersion && sys.version === sys.publishedVersion + 1;
 const log = (m: string) => console.log(m);
 
