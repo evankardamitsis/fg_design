@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Button } from "@/components/Button";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Footer } from "@/components/Footer";
@@ -7,11 +8,12 @@ import { Nav } from "@/components/Nav";
 import { Reveal, RevealMedia } from "@/components/motion/Reveal";
 import { getDesignPageContent } from "@/lib/service-content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Design | FG Design Partners",
   description:
     "Interior architecture, spatial planning, material development and design studies by FG Design Partners.",
-};
+  path: "/design",
+});
 
 export default async function DesignPage() {
   const content = await getDesignPageContent();

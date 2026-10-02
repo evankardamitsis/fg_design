@@ -1,22 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
 import { PortfolioCategoryNav } from "@/components/PortfolioCategoryNav";
 import { Reveal } from "@/components/motion/Reveal";
-import { getProjects } from "@/lib/project-content";
+import { getPortfolioSummary, getProjects } from "@/lib/project-content";
 import { getCurrentProjects } from "@/lib/current-projects";
 
-export const metadata: Metadata = {
-  title: "Portfolio | FG Design Partners",
-  description:
-    "Six London residences, 2019 to 2026: Gloucester Walk, Notting Hill, 18 Stanhope Terrace, Kensington Palace, Chelsea and Wycombe Square.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const summary = await getPortfolioSummary();
+  return pageMetadata({
+    title: "Portfolio | FG Design Partners",
+    description: `${summary.countWord} London residences, ${summary.yearRange}: ${summary.names}.`,
+    path: "/portfolio",
+  });
+}
 
 export default async function PortfolioPage() {
-  const [projects, currentProjects] = await Promise.all([getProjects(), getCurrentProjects()]);
+  const [projects, currentProjects, summary] = await Promise.all([
+    getProjects(),
+    getCurrentProjects(),
+    getPortfolioSummary(),
+  ]);
 
   return (
     <>
@@ -28,10 +36,10 @@ export default async function PortfolioPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <h1 className="mt-8 max-w-3xl text-4xl leading-tight tracking-[-0.035em] md:text-6xl">
-            Six <span className="font-display italic tracking-[-0.02em]">residences.</span>
+            {summary.countWord} <span className="font-display italic tracking-[-0.02em]">residences.</span>
           </h1>
           <p className="mt-4 font-display italic text-xl text-ink/70">
-            2019 to 2026, London SW3, W8 and W2
+            {summary.yearRange}, London {summary.postcodes}
           </p>
         </Reveal>
         <Reveal delay={0.16}>

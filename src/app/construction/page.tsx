@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Button } from "@/components/Button";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Footer } from "@/components/Footer";
@@ -9,11 +10,12 @@ import { StaggerCard } from "@/components/motion/StaggerCard";
 import { TextReveal } from "@/components/motion/TextReveal";
 import { getConstructionPageContent } from "@/lib/service-content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Construction | FG Design Partners",
   description:
     "Construction delivery, specialist trade coordination and quality control by FG Design Partners.",
-};
+  path: "/construction",
+});
 
 export default async function ConstructionPage() {
   const content = await getConstructionPageContent();

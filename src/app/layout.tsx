@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 import "./globals.css";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { CookieConsent } from "@/components/CookieConsent";
 
 export const metadata: Metadata = {
-  title: "FG Design Partners | Turnkey Design & Build, London",
-  description:
-    "FG Design Partners deliver turnkey design and build for London's most distinguished homes — one in-house team, from concept through completion.",
+  metadataBase: new URL(SITE_URL),
+  ...pageMetadata({
+    title: "FG Design Partners | Turnkey Design & Build, London",
+    description:
+      "FG Design Partners deliver turnkey design and build for London's most distinguished homes: one in-house team, from concept through completion.",
+    path: "/",
+  }),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

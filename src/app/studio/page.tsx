@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
 import { Counter } from "@/components/motion/Counter";
@@ -8,11 +9,12 @@ import { Reveal, RevealMedia, StaggerReveal } from "@/components/motion/Reveal";
 import { StaggerCard } from "@/components/motion/StaggerCard";
 import { TextReveal } from "@/components/motion/TextReveal";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About | FG Design Partners",
   description:
     "Founded by Fardad Ghodoussi, FG Design Partners brings interior architecture, construction and completion together under one roof.",
-};
+  path: "/studio",
+});
 
 const capabilities = [
   {

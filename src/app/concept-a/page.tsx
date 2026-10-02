@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { CinematicProjectGallery } from "@/components/concepts/CinematicProjectGallery";
@@ -7,10 +8,11 @@ import { ConceptHeader } from "@/components/concepts/ConceptHeader";
 import { ConceptReveal } from "@/components/concepts/ConceptReveal";
 import { getFeaturedProjects } from "@/lib/project-content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Concept A | FG Design Partners",
   description: "A dark cinematic homepage concept for FG Design Partners.",
-};
+  path: "/concept-a",
+});
 
 const delivery = [
   {

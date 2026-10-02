@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMetadata, shareImage } from "@/lib/seo";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
 import { Reveal, RevealMedia } from "@/components/motion/Reveal";
@@ -25,10 +26,12 @@ export async function generateMetadata({
 
   if (!project) return {};
 
-  return {
+  return pageMetadata({
     title: `${project.title} | FG Design Partners`,
     description: project.paragraphs[0],
-  };
+    path: `/portfolio/commercial/${slug}`,
+    image: shareImage(project.cover?.src, project.cover?.alt ?? project.title),
+  });
 }
 
 export default async function CommercialProjectPage({

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { ConceptFooter } from "@/components/concepts/ConceptFooter";
@@ -7,10 +8,11 @@ import { ConceptReveal } from "@/components/concepts/ConceptReveal";
 import { EditorialProjectGallery } from "@/components/concepts/EditorialProjectGallery";
 import { getFeaturedProjects } from "@/lib/project-content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Concept C | FG Design Partners",
   description: "A refined editorial homepage concept for FG Design Partners.",
-};
+  path: "/concept-c",
+});
 
 const services = [
   ["Interior architectural design", "Spatial planning, specification and a complete visual language for the home."],

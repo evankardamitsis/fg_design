@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage } from "@/app/legal/LegalPage";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Terms of Use | FG Design Partners",
   description: "Terms governing the use of the FG Design Partners website.",
-};
+  path: "/terms",
+});
 
 export default function TermsPage() {
   return (

@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage } from "@/app/legal/LegalPage";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy | FG Design Partners",
   description: "How FG Design Partners collects, uses, and protects personal data.",
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

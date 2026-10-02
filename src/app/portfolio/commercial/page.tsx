@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Footer } from "@/components/Footer";
 import { Nav } from "@/components/Nav";
@@ -8,11 +9,12 @@ import { PortfolioCategoryNav } from "@/components/PortfolioCategoryNav";
 import { Reveal } from "@/components/motion/Reveal";
 import { getCommercialProjects } from "@/lib/commercial-projects";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Commercial Portfolio | FG Design Partners",
   description:
     "Commercial design, development and project coordination by FG Design Partners.",
-};
+  path: "/portfolio/commercial",
+});
 
 export default async function CommercialPortfolioPage() {
   const projects = await getCommercialProjects();

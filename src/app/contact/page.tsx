@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Eyebrow } from "@/components/Eyebrow";
 import { Reveal } from "@/components/motion/Reveal";
 import { ContactForm } from "./ContactForm";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact | FG Design Partners",
   description: "Start a conversation with FG Design Partners about your next project.",
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

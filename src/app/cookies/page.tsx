@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { LegalPage } from "@/app/legal/LegalPage";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Cookie Policy | FG Design Partners",
   description: "How FG Design Partners uses cookies and similar technologies.",
-};
+  path: "/cookies",
+});
 
 export default function CookiesPage() {
   return (

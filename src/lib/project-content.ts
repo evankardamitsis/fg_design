@@ -194,3 +194,29 @@ export async function getProjectBySlug(slug: string): Promise<ProjectPageContent
   const project = (await getProjects()).find((item) => item.slug === slug);
   return project ? normalizeProject(project) : undefined;
 }
+
+const NUMBER_WORDS = [
+  "No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+  "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty",
+];
+
+const listJoin = (items: string[]) =>
+  items.length > 1 ? `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}` : items.join("");
+
+/**
+ * Portfolio header facts derived from the published projects, so the copy stays
+ * true as projects are added or removed in the CMS.
+ */
+export async function getPortfolioSummary() {
+  const list = await getProjects();
+  const years = list.flatMap((project) => project.timeline.match(/\d{4}/g)?.map(Number) ?? []);
+  const postcodes = [...new Set(list.map((project) => project.postcode).filter(Boolean))].sort();
+  const yearRange = years.length ? `${Math.min(...years)} to ${Math.max(...years)}` : "";
+  return {
+    count: list.length,
+    countWord: NUMBER_WORDS[list.length] ?? String(list.length),
+    yearRange,
+    postcodes: listJoin(postcodes),
+    names: listJoin(list.map((project) => project.title)),
+  };
+}
